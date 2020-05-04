@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css');
+
+      :root {
+        --font-primary: 'Styrene A';
+        --color-primary: #231F20;
+        --white: #fff;
+      }
+
+      html {
+        font-family: var(--font-primary);
+        font-size: 11pt;
+        color: var(--white);
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }    
+
+      .container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 130.4pt;
+      }
+
+      .logo {
+        position: relative;
+      }
+
+      .logo--primary {
+        max-width: 362pt;
+        max-height: 33pt;
+      }
+
+      .header {
+        height: 34.4pt;
+      }
+
+      .heading {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding-left: 37pt;
+        font-size: 16.4pt;
+        font-weight: normal;
+        text-transform: uppercase;
+        letter-spacing: 1pt;
+      }
+      
+      .heading h1{
+        margin-top: -3px;
+      }
+
+      .heading--cw-green {
+        background-color: {{{account.colors.cw-green}}};
+      }
+      .heading--cw-blue {
+        background-color: {{{account.colors.cw-blue}}};
+      }
+      .heading--rex {
+        background-color: {{{account.colors.rex}}};
+      }
+      .heading--gsr-green {
+        background-color: {{{account.colors.gsr-green}}};
+      }
+      .heading--gsr-blue {
+        background-color: {{{account.colors.gsr-blue}}};
+      }
+      .heading--gsr-red {
+        background-color: {{{account.colors.gsr-red}}};
+      }
+      .heading--bronze {
+        background-color: {{{account.colors.jb-bronze}}};
+      }
+      .heading--jb-green {
+        background-color: {{{account.colors.jb-green}}};
+      }
+      .heading--jb-grey {
+        background-color: {{{account.colors.jb-grey}}};
+      }
+
+      .body {
+        flex: 1;
+        padding: 17.7pt 32pt 46pt 36.5pt;
+      }
+
+      .content {
+        color: var(--color-primary);
+      }
+
+      .content h2 {
+        margin-top: 3.4pt;
+        margin-bottom: 2.7pt;
+        font-size: 8.1pt;
+        line-height: 1.2em;
+      }
+
+      .content p {
+        margin-bottom: 2.9pt;
+        font-size: 6.4pt;
+        line-height: 1.5em;
+      }
+
+      .content p + h2 {
+        margin-top: 5.8pt;
+      }
+
+      .content p:last-child {
+        margin-top: 5.5pt;
+      }
+
+      .content ul {
+        position: relative;
+        padding-left: 9.7pt;
+        margin: 4.5pt 0 5pt 0;
+        list-style-type: none;
+      }
+
+      .content li {
+        padding-bottom: 1.9pt;
+        font-size: 6.4pt;
+        line-height: 1.2em;
+      }
+
+      .content li:before {
+        content: "•";
+        position: absolute;
+        left: 0;
+        color: var(--primary);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 41pt;
+      }
+
+      .logo--secondary {
+        max-width: 370.2pt;
+        max-height: 25.1pt;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          {{#JB_header-background-image--ija}}
+          <div class="hero">
+            <div class="backgroundImage">
+              <div class="reposition-fix">{{{JB_header-background-image--ija}}}</div><!--reposition-fix-->
+            </div><!--backgroundImage-->
+            <img class="logo logo--primary" src="{{{JB_header-logo--ija}}}"><!--logo-->
+          </div><!--hero-->
+          {{/JB_header-background-image--ija}}
+          {{#JB_job-title--ija}}
+          <div class="header">
+            <div class="heading heading--{{{JB_job-title-background--ija}}}" data-max-height="45"><h1>{{{JB_job-title--ija}}}</h1></div><!--heading-->
+          </div><!--header-->
+          {{/JB_job-title--ija}}
+          <div class="body">
+            <div data-max-height="dynamic">
+              <div class="content">{{{JB_body-copy--ija}}}</div><!--content-->
+            </div>
+          </div><!--body-->
+          {{#JB_footer-logo--ija}}
+          <div class="footer">
+            <img class="logo logo--secondary" src="{{{JB_footer-logo--ija}}}"><!--logo-->
+          </div><!--footer-->
+          {{/JB_footer-logo--ija}}
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+		if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
