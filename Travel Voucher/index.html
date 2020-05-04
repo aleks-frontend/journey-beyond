@@ -1,0 +1,298 @@
+<!DOCTYPE html> 
+<html data-sign="OSB" data-input-order="{{ JB_background-image-trv }}{{ JB_header-logo-stack-trv }}{{ JB_heading-trv }}">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Calibri-Full/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css');
+
+      :root {
+
+        --font-primary: 'Styrene A';
+        --font-secondary: 'Calibri';
+
+        --white: #fff;
+        --black: #000;
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.gsr-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+      }
+
+      .copyColour--cw-green {
+        --copyColor: var(--cw-green);
+      }
+
+      .copyColour--cw-blue {
+        --copyColor: var(--cw-blue);
+      }
+
+      .copyColour--rex {
+        --copyColor: var(--rex);
+      }
+
+      .copyColour--gsr-green {
+        --copyColor: var(--gsr-green);
+      }
+
+      .copyColour--gsr-blue {
+        --copyColor: var(--gsr-blue);
+      }
+
+      .copyColour--gsr-red {
+        --copyColor: var(--gsr-red);
+      }
+
+      .copyColour--jb-bronze {
+        --copyColor: var(--jb-bronze);
+      }
+
+      .copyColour--jb-light-green {
+        --copyColor: var(--jb-green);
+      }
+
+      .copyColour--jb-grey {
+        --copyColor: var(--jb-grey);
+      }
+
+      html {
+        font-family: var(--font-primary);
+        font-size: 11pt;
+        color: #000;
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }          
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 35pt;
+      }
+
+      .header {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        height: 345pt;
+        padding: 32pt 50pt 16pt;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .logo {
+        display: block;
+        max-width: 100%;
+        max-height: 70pt;
+      }
+
+      .logo--secondary {
+        max-width: 122pt;
+        max-height: 26pt;
+        margin-top: 31pt;
+      }
+
+      .heading {
+        font-size: 32.5pt;
+        font-weight: bold;
+        color: var(--white);
+        text-transform: uppercase;
+      }
+
+      .body {
+        display: flex;
+        flex: 1;      
+        flex-direction: column;
+        padding: 31pt 46pt 0pt;
+      }
+
+      .copy {
+        font-family: var(--font-secondary);
+        color: var(--copyColor);
+        text-align: center;
+        border-bottom: 1pt solid var(--bronze);
+      }
+
+      .copy a {
+        color: var(--copyColour);
+      }
+
+      .copy h1 {
+        font-size: 29pt;
+        letter-spacing: 6pt;
+        text-transform: uppercase;
+      }
+
+      .copy h2 {
+        font-size: 16.1pt;
+      }
+
+      .copy p {
+        font-size: 14.3pt;
+        letter-spacing: 1.1pt;
+      }
+
+      .copy h4 {
+        font-size: 10.2pt;
+        letter-spacing: 1.3pt;
+      }
+
+      .copy h1,
+      .copy h2,
+      .copy h4,
+      .copy p {
+        margin-bottom: 0.6em;
+      }
+
+      .copy h1:last-child,
+      .copy h2:last-child,
+      .copy h4:last-child,
+      .copy p:last-child {
+        margin-bottom: 0;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        margin-top: 10pt;
+        padding: 4.4pt 46pt 18pt;   
+      }
+
+      .disclaimer {
+        font-family: var(--font-secondary);
+        font-size: 6.9pt;
+        line-height: 1.2em;
+        color: var(--black);
+      }
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} copyColour--{{{JB_copy-colour--trv}}}{{^JB_copy-colour--trv}}cw-green{{/JB_copy-colour--trv}} " data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="header">
+            <div class="backgroundImage">
+              <div class="reposition-fix">
+                {{{ JB_background-image-trv }}}
+              </div> <!-- reposition-fix -->
+            </div> <!-- backgroundImage -->     
+            <img src="{{ JB_header-logo-stack-trv }}" class="logo" />
+            <div class="heading" data-max-line="1"> {{{ JB_heading-trv }}} </div> <!-- heading -->
+          </div> <!-- header -->
+          <div class="body">
+            <div class="copy" data-max-height="dynamic">
+              {{{JB_copy--trv}}} 
+            </div><!--copy-->
+          </div> <!-- body -->
+          <div class="footer"> 
+            <div class="disclaimer" data-max-line="4">
+              {{{JB_disclaimer--trv}}} 
+            </div> <!-- disclaimer -->
+            <img src="{{{JB_logo--trv}}}" class="logo logo--secondary" />
+          </div> <!-- footer -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();      
+
+    </script>
+
+
+  </body>
+</html>
