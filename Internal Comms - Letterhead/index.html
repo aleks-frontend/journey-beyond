@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html data-sign="OSB" data-inputs="{{{JBl_themeImage}}}{{{CWSbcc_logo-scaling-input--lh}}}{{{JB_font-slider--l}}}{{{JBL_colour--l}}}{{{JBl_logo-global}}}">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+
+      :root {
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.gsr-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+      }
+
+
+      .colour--cw-green .content {
+        --dynamic-colour: var(--cw-green);
+      }
+
+      .colour--cw-blue .content {
+        --dynamic-colour: var(--cw-blue);
+      }
+
+      .colour--rex .content {
+        --dynamic-colour: var(--rex);
+      }
+
+      .colour--gsr-green .content {
+        --dynamic-colour: var(--gsr-green);
+      }
+
+      .colour--gsr-blue .content {
+        --dynamic-colour: var(--gsr-blue);
+      }
+
+      .colour--gsr-red .content {
+        --dynamic-colour: var(--gsr-red);
+      }
+
+      .colour--jb-bronze .content {
+        --dynamic-colour: var(--jb-bronze);
+      }
+
+      .colour--jb-green .content{
+        --dynamic-colour: var(--jb-green);
+      }
+
+      .colour--jb-grey .content {
+        --dynamic-colour: var(--jb-grey);
+      }
+
+      html {
+        font-family: "Circular";
+        font-size: 11pt;
+        color: #000;
+      }
+
+      /* Placeholder Styling */
+      .placeholder__container {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.3s all;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url({{{ placeholder-image }}}); 
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;   
+        opacity: 0.4;
+      }
+
+      .u-placeholder-locked .placeholder__container {
+        opacity: 1;  
+      }
+
+      .u-placeholder-hidden .placeholder__container,
+      .u-placeholder-hidden .placeholder__trigger {
+        display: none;
+      }
+
+      .placeholder__trigger {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 1rem;
+        height: 1rem;
+        border-bottom-left-radius: 1rem;
+        background: #467BE3;
+        transition: all 0.3s;
+        transform: translate(30%, -30%);
+        opacity: 0;
+        z-index: 9999;
+      }   
+
+      .bleed:hover .placeholder__trigger:hover {
+        cursor: pointer;
+        opacity: 1;        
+      }
+
+      .placeholder__trigger svg {
+        width: 50%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-25%, -50%);
+      }
+
+      .bleed:hover .placeholder__trigger {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }      
+
+      .bleed:hover .placeholder__trigger:hover + .placeholder__container {
+        opacity: 1;
+      }      
+
+      .placeholderBtn__container {
+        position: absolute;
+        top: 0;
+        left: -0.6rem;
+        bottom: -0.6rem;
+        right: 0;
+        transition: 0.3s all;
+        transform: rotate(-90deg);
+        transform-origin: top right;
+        opacity: 0;
+      }
+
+      .placeholder__trigger:hover .placeholderBtn__container {
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      .placeholderBtn {
+        position: absolute;
+        left: 0;
+        top: 0.04rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: #467BE3;
+        color: #fff;
+        font-size: 0.27rem;
+        text-decoration: none;
+        line-height: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }     
+
+      .placeholderBtn--plus::before {
+        content: '+';
+      }            
+
+      .placeholderBtn--minus {
+        top: 0.68rem;
+        left: 0.4rem;       
+      }    
+
+      .placeholderBtn--minus::before {
+        content: '-';        
+      }
+
+      .placeholderBtn--lock {
+        bottom: 0;
+        top: auto;
+        right: 0.04rem;
+        left: auto;
+      }
+
+      .placeholderBtn--lock::before {
+        content: 'L';
+      }
+
+      .u-placeholder-locked .placeholderBtn--lock::before {
+        content: 'U';
+      }      
+
+      /* End Placeholder Styling */
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0.1rem;
+        right: 0.1rem;
+        height: .3107rem;
+        width: .3107rem;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0.01rem 0.01rem 0.01rem 0.0155rem;
+        box-sizing: border-box;
+        font-size: 0.2279rem;
+        text-align: center;
+        line-height: .2693rem;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 0.5rem;
+        right:  0.1rem;
+        background-color: black;
+        color: white;
+        border-radius: 0.01rem;
+        padding: 0.2rem 0.2rem;        
+        box-sizing: border-box;
+        font-size: 0.35rem;
+        font-weight: 400;     
+        text-align: right;
+        width: 6rem;
+        line-height: 0.45rem;
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }
+      
+      .page {
+        border-bottom: 1px solid #48575F;;
+      }
+      
+      .page:last-of-type {
+        border-bottom: none;
+      } 
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }    
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }     
+
+      .container {
+        padding-top: 1.456rem;
+      }
+
+      .themeImage {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: url("{{{ JBl_themeImage }}}");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        z-index: -1;
+      }
+      
+      .show--header-only .footer {
+        display: none;
+      }
+      
+      .show--footer-only .logo {
+        display: none;
+      }
+      
+      .show--footer-info-only .footer__image,
+      .show--footer-info-only .bottomImage__container,
+      .show--footer-info-only .logo {
+        display: none;
+      }
+      
+      .show--none .logo,
+      .show--none .footer {
+        display: none;
+      }
+      
+      .show--both .logo,
+      .show--both .footer {
+        display: block;
+      }
+
+      .logo {
+        display: block;
+        margin: 0 auto 1.404rem;
+        max-height: {{{ CWSbcc_logo-scaling-input--lh }}}%; 
+        max-width: {{{ CWSbcc_logo-scaling-input--lh }}}%; 	
+        width: auto;
+        height: auto;
+      }
+
+      .content {
+        flex: 1;
+        padding: 0 1.193rem 0.6rem;
+        font-size: {{{ JB_font-slider--l}}}%;
+        color: #48575F;        
+      }
+
+      .content__maxHeight {
+        max-height: 11.481rem;
+      }
+
+      .content h1 {
+        font-size: 0.7em;
+        margin: 0.526rem 0 0.351rem;
+        color: var(--dynamic-colour);
+      }
+
+      .content h1:first-child {
+        margin-top: 0;
+      }
+
+      .content h2 {
+        font-size: 0.53em;
+        margin: 0.351rem 0 0.263rem;
+        color: var(--dynamic-colour);
+      }
+
+      .content p,
+      .content ul {
+        margin: 0.175rem 0;
+        font-size: 0.4em;
+      }
+
+      .content ul {
+        list-style-type: disc;
+        padding-left: 25px;
+      }
+
+      .footer {
+        padding: 0 10% 0.6rem;
+        text-align: center;
+        font-size: 0.3rem;
+        color: #48575F;
+      }
+
+      .footer__logo {
+        width: 6.036rem;
+        margin: 0 auto;
+      }
+
+      .footer__image {
+        min-width: 3.018rem;
+        max-height: {{{ CWSbcc_footer-logo-scaling-input--lh }}}%; 
+        max-width: {{{ CWSbcc_footer-logo-scaling-input--lh }}}%; 	
+        margin-bottom: 15pt;
+      }
+
+      .info__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .info {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        margin: 0 3.75pt;
+      }
+
+      .info__label {
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .info__label::after {
+        content: ':';
+      }
+
+      .bottomImage__container {
+        margin: 15pt auto 0;
+        width: 6.036rem;
+        text-align: center;
+      }
+
+      .bottomImage {
+        min-width: 3.684rem;
+        max-height: {{{ CWSbcc_logo-scaling-input--lh }}}%; 
+        max-width: {{{ CWSbcc_logo-scaling-input--lh }}}%; 	  
+      }
+
+      .js-inject-src { display: none; }
+
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="{{ placeholder-toggle }} colour--{{{JBL_colour--l}}}{{^JBL_colour--l}}gsr-red{{/JBL_colour--l}}
+                                         show--{{{JBL_header-footer-options--l}}}{{#JBL_header-footer-options--l}}{{/JBL_header-footer-options--l}}
+                                         " data-crop="{{show-crop}}">    
+    <div class="js-inject-src" data-target-id="header-logo" data-is-image="true">{{{ JBl_logo-global }}}</div>
+    <div class="js-inject-src" data-target-id="footer-logo" data-is-image="true">{{{ JBl_footer-image }}}</div>
+    <div class="js-inject-src" data-target-id="footer-text">{{{JBL_info--l}}}</div>
+
+    <div class="pageWrapper">
+    {{#collection.pages}}
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <span class="placeholder__trigger">   
+          <div class="placeholderBtn__container">
+            <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+          </div>
+          <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <title>background</title>
+              <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+            </g>
+          </svg>
+        </span><!-- end placeholder__trigger -->
+        <div class="placeholder__container">
+          <div class="placeholder"></div>
+        </div><!-- end placeholder__container -->
+
+        <div class="container fit">
+          <div class="themeImage"></div>
+          <img src="#" class="logo" data-target="header-logo">
+          <div class="content">
+            <div data-max-height="dynamic">
+              {{{ JBl_content }}}
+            </div> <!-- data-max-height -->
+          </div><!--content-->
+          <div class="footer">
+            <div class="footer__logo">
+              <img src="#" class="footer__image" data-target="footer-logo" />
+            </div><!-- end footer__logo -->
+            <div class="info__container" data-target="footer-text"  data-max-height="43"></div><!-- end info__container -->
+            {{#JBl_bottomImage}}
+            <div class="bottomImage__container">
+              <img src="{{{ JBl_bottomImage }}}" class="bottomImage">
+            </div><!--bottomImage__containe-->
+            {{/JBl_bottomImage}}
+          </div><!-- end footer -->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/collection.pages}}     
+    </div><!--pageWrapper-->
+    
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main.js"></script>   
+    <script src="prefixfree.js"></script>
+    <script src="placeholder-controller.js"></script>
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>  
+    <script src="max-height-check.js"></script> 
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.3.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxHeightCheck();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });       
+
+      function injectDynamicContent() {
+        const sources = document.querySelectorAll('.js-inject-src');
+        sources.forEach(source => {
+          const targetID = source.dataset.targetId;
+          const targets = document.querySelectorAll(`[data-target="${targetID}"]`);
+
+          targets.forEach(target => {
+            const imageCheck = ( source.dataset.isImage == 'true' );
+
+            if ( imageCheck ) {
+              target.src = `${source.innerText}`;                
+            } else {
+              target.innerHTML = source.innerHTML;
+            }
+          });
+
+        });
+      }
+
+      injectDynamicContent();
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+      placeholderControler();             
+      checkCrop();  
+      //      checkExport(); 
+      //      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      /*
+        TextFit.fit({
+          selector: '.textFit'
+        });      
+        */
+
+    </script>
+
+
+  </body>
+</html>
