@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Circular/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Calibri-Full/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Just%20Sunday/stylesheet.css');
+
+      :root {
+        --black: #000;
+        --white: #fff;
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.gsr-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+
+        --dynamic-colour: var(--black);
+        --background-colour: var(--black)
+      }
+
+      .initialColor--black { --dynamic-colour: var(--black); }
+      .initialColor--cw-green { --dynamic-colour: var(--cw-green); }
+      .initialColor--cw-blue { --dynamic-colour: var(--cw-blue); }
+      .initialColor--rex { --dynamic-colour: var(--rex); }
+      .initialColor--gsr-green { --dynamic-colour: var(--gsr-green); }
+      .initialColor--gsr-blue { --dynamic-colour: var(--gsr-blue); }
+      .initialColor--gsr-red { --dynamic-colour: var(--gsr-red); }
+      .initialColor--jb-bronze { --dynamic-colour: var(--jb-bronze); }
+      .initialColor--jb-green { --dynamic-colour: var(--jb-green); }
+      .initialColor--jb-grey { --dynamic-colour: var(--jb-grey); }
+
+
+      .backgroundColor--black { --background-colour: var(--black); }
+      .backgroundColor--cw-green { --background-colour: var(--cw-green); }
+      .backgroundColor--cw-blue { --background-colour: var(--cw-blue); }
+      .backgroundColor--rex { --background-colour: var(--rex); }
+      .backgroundColor--gsr-green { --background-colour: var(--gsr-green); }
+      .backgroundColor--gsr-blue { --background-colour: var(--gsr-blue); }
+      .backgroundColor--gsr-red { --background-colour: var(--gsr-red); }
+      .backgroundColor--jb-bronze { --background-colour: var(--jb-bronze); }
+      .backgroundColor--jb-green { --background-colour: var(--jb-green); }
+      .backgroundColor--jb-grey { --background-colour: var(--jb-grey); }
+
+      html {
+        font-family: "Styrene A";
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+
+
+      .page { border-bottom: 1px solid #000;}      
+      .is-export-mode .page { border-bottom: none; }
+
+      /* Placeholder Styling */
+      .placeholder__container {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.3s all;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url({{{ placeholder-image }}}); 
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;   
+        opacity: 0.4;
+      }
+
+      .u-placeholder-locked .placeholder__container {
+        opacity: 1;  
+      }
+
+      .u-placeholder-hidden .placeholder__container,
+      .u-placeholder-hidden .placeholder__trigger {
+        display: none;
+      }
+
+      .placeholder__trigger {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 1rem;
+        height: 1rem;
+        border-bottom-left-radius: 1rem;
+        background: #467BE3;
+        transition: all 0.3s;
+        transform: translate(30%, -30%);
+        opacity: 0;
+        z-index: 9999;
+      }   
+
+      .bleed:hover .placeholder__trigger:hover {
+        cursor: pointer;
+        opacity: 1;        
+      }
+
+      .placeholder__trigger svg {
+        width: 50%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-25%, -50%);
+      }
+
+      .bleed:hover .placeholder__trigger {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }      
+
+      .bleed:hover .placeholder__trigger:hover + .placeholder__container {
+        opacity: 1;
+      }      
+
+      .placeholderBtn__container {
+        position: absolute;
+        top: 0;.
+        left: -0.6rem;
+        bottom: -0.6rem;
+        right: 0;
+        transition: 0.3s all;
+        transform: rotate(-90deg);
+        transform-origin: top right;
+        opacity: 0;
+      }
+
+      .placeholder__trigger:hover .placeholderBtn__container {
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      .placeholderBtn {
+        position: absolute;
+        left: 0;
+        top: 0.04rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: #467BE3;
+        color: #fff;
+        font-size: 0.27rem;
+        text-decoration: none;
+        line-height: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }     
+
+      .placeholderBtn--plus::before {
+        content: '+';
+      }            
+
+      .placeholderBtn--minus {
+        top: 0.68rem;
+        left: 0.4rem;       
+      }    
+
+      .placeholderBtn--minus::before {
+        content: '-';        
+      }
+
+      .placeholderBtn--lock {
+        bottom: 0;
+        top: auto;
+        right: 0.04rem;
+        left: auto;
+      }
+
+      .placeholderBtn--lock::before {
+        content: 'L';
+      }
+
+      .u-placeholder-locked .placeholderBtn--lock::before {
+        content: 'U';
+      }      
+
+      /* End Placeholder Styling */
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0.1rem;
+        right: 0.1rem;
+        height: .3107rem;
+        width: .3107rem;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0.01rem 0.01rem 0.01rem 0.0155rem;
+        box-sizing: border-box;
+        font-size: 0.2279rem;
+        text-align: center;
+        line-height: .2693rem;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 0.5rem;
+        right:  0.1rem;
+        background-color: black;
+        color: white;
+        border-radius: 0.01rem;
+        padding: 0.2rem 0.2rem;        
+        box-sizing: border-box;
+        font-size: 0.35rem;
+        font-weight: 400;     
+        text-align: right;
+        width: 6rem;
+        line-height: 0.45rem;
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }      
+
+      .overflow-h-true .overflow:hover:after {
+        content: 'Character limit exceeded';        
+      }         
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }    
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      .headerImage {
+        position: absolute;
+        overflow: hidden;
+      }
+
+      .headerImage--background { background: var(--background-colour); }
+
+      .header--largeSingleImage {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 508px;
+        padding: calc(50px + 3mm) 50px 50px;
+      }
+
+      .u-header-small { height: 254px;}
+
+      .header--largeSingleImage.header--logoTop { justify-content: flex-start; }
+
+      .header--largeSingleImage.header--logoBot { 
+        margin-bottom: 0;
+        position: relative;
+        justify-content: flex-end;
+      }
+
+      .header--logoBot .header__text {
+        /*        align-items: flex-end;&*/
+        margin-top: 0;
+        margin-bottom: 0 !important;
+      }
+
+      .headerLogo {        
+        width: 225px;
+        max-height: 100%;       
+      }
+
+      .headeerLogo--additionalPages { max-height: 80%; }
+
+      .u-header-small .headerLogo { max-height: 80px; }
+
+      .header--largeSingleImage .headerLogo {  
+        position: relative;
+        display: block;
+        object-fit: contain;
+        z-index: 22;
+      }
+
+      .header--largeSingleImage .headerLogo__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0;
+      }
+
+      .header--largeSingleImage.header--logoTop .headerLogo__container { align-items: flex-start; }
+      .header--largeSingleImage.header--logoBot .headerLogo__container { align-items: flex-end; }
+
+      .header--largeSingleImage .headerLogo__container .headerLogo {
+        flex-shrink: 1;
+        object-fit: contain;
+      }
+
+      .header__text {
+        position: relative;
+        /*flex-grow: 1;*/
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-top: 0.5rem;
+        font-weight: bold;
+        color: #fff;
+        z-index: 22;
+      }    
+
+      .header--largeSingleImage .header__text {         
+        margin-top: 0; 
+        min-height: 42px;
+      }
+
+      .header__text h1,
+      .header__copy h1,
+      .table__cell h1 {
+        font-size: 30.1px;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+
+      .header__text h1,
+      .header__text h2 {
+        color: #fff;
+      }
+
+      .header__text h1 em,
+      .header__text h2 em{
+        font-family: 'Just Sunday';
+        font-weight: bold;
+        font-style: normal;
+        font-size: 385%;
+      }
+
+      .header__text h2,
+      .header__copy h2,
+      .table__cell h2 {
+        font-size: 20.5px;
+        line-height: 1.2em;
+        font-weight: bold;
+      }
+
+      .header__text--primary  { width: 100%; }
+
+      .header__text--secondary { 
+        display: none;
+        flex: unset;
+      }
+
+      .header--largeSingleImage .header__text--secondary { 
+        flex-grow: 1;
+        align-items: center;
+        text-align: center;
+      }
+
+      .header--logoBot .header__text {
+        /*        align-items: flex-end; */
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+      }
+
+      .header--logoBot.u-header-small .header__text {
+        margin-bottom: 0.2rem;
+      }
+
+      .header--logoCenter .header__text--primary { display: none; }
+      .header--logoCenter .header__text--secondary { display: flex; }
+
+      .no-logo .header__text,
+      .header--logoBot.no-logo .header__text { margin: 0 }
+
+      .header--logoBot .header__content { flex-direction: column-reverse; }
+
+      .header--largeSingleImage .headerImage__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .header--largeSingleImage .headerImage__container .headerImage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .header.header--smallLogo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 210px;
+      }
+
+      .header--smallLogoWithText {
+        position: relative;
+        display: flex;  
+        justify-content: space-between;
+        align-items: center;
+        height: 210px;
+        padding: 0 107px;
+      }
+
+      .no-logo .header.header--smallLogo { display: none; }
+      .header--smallLogo .headerImage { display: none; } 
+
+      .header__logo {
+        max-height: 150px;
+        max-width: 185px;
+      }
+
+      .header__copy {
+        width: 300px;
+        font-size: 12.8px;
+        line-height: 1.4em;
+        color: #000;
+      }
+
+      .header__inner { 
+        width: 100%; 
+      }
+
+      .body {
+        display: flex;
+        flex-direction: row;        
+        flex: 1;
+      }
+
+      .header--largeSingleImage .body {
+        position: absolute;
+        bottom: 100px;
+        padding-top: 30px;
+      }
+
+      .body--singleCol { 
+        display: block;
+      }
+
+      .col {
+        align-self: flex-start;
+        flex: 1;
+      }
+
+      .col--left {
+        width: 62.8%; 
+        padding: 0 2px 0 107px;
+      }
+
+      .body--rightColLarge .col--left { width: 37.4%; }
+      .body--equalCols .col--left { width: 50%; }
+
+      .body--singleCol .col--left {
+        padding: 27px 107px;
+        width: 100%;
+      }
+
+      .body--bothCol {
+        padding: 27px 107px;
+      }
+
+      .body--bothCol .col--both { flex: 1; }
+      .col--parent + .col--parent { margin-left: 27px; }
+
+      .quote {
+        margin-bottom: 10px;
+        font-size: 14.7px;
+        line-height: 21.9px;
+        text-align: right;
+        font-style: italic;
+        letter-spacing: -1.7px;
+      }
+
+      .quote {color: var(--dynamic-colour);};
+
+      /*.initialColor--black .quote { color: #000; }
+      .initialColor--blue .quote { color: #0096d7; }
+      .initialColor--bronze .quote { color: {{{ account.colors.jb-bronze }}}; }
+      .initialColor--green .quote { color: {{{ account.colors.jb-green }}}; }*/f
+      .body--singleCol .quote { text-align: left; }
+
+      .body--bothCol .quote { text-align: left; }
+
+      .col--right {
+        width: 37.4%;
+        padding: 0 108px 0 27px;
+      }
+
+      .block__container { margin-top: -20px; }
+      .block { margin-top: 20px; }
+
+      .body--rightColLarge .col--right {
+        width: 62.8%;
+        padding-left: 38px;
+      }
+
+      .body--equalCols .col--right { width: 50%; }
+
+      .body--singleCol .col--right {
+        width: 100%;
+        padding: 27px 107px;
+      }
+
+
+      .heading {
+        margin-bottom: 3px;
+        font-size: 30.1px;
+        line-height: 1.25em;
+        font-weight: bold;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        word-spacing: -2.4px;
+      }
+
+      .heading {color: var(--dynamic-colour);}
+
+      /*.initialColor--black .heading { color: #000; }
+      .initialColor--blue .heading { color: #0096d7; }
+      .initialColor--bronze .heading { color: {{{ account.colors.jb-bronze }}}; }
+      .initialColor--green .heading { color: {{{ account.colors.jb-green }}}; }*/
+
+
+      .heading--alt { 
+        padding: 2.4px 0;
+        font-size: 41.1px;
+        font-family: 'Calibri';
+        word-spacing: 1.6px;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+
+      .heading--alt {border-top: var(--dynamic-colour);}
+      /*.initialColor--black .heading--alt { border-top: 2px solid #000; }
+      .initialColor--blue .heading--alt {border-top: 2px solid #0096d7; }
+      .initialColor--bronze .heading--alt { border-top: 2px solid {{{ account.colors.jb-bronze }}}; }
+      .initialColor--green .heading--alt { border-top: 2px solid {{{ account.colors.jb-green }}}; }*/
+
+      .subheading {
+        margin-bottom: 12px;
+        font-size: 20.5px;
+        text-transform: uppercase;
+        letter-spacing: -2.7px;
+        word-spacing: 3px; 
+      }
+
+      .copy {
+        font-size: 12.8px;
+        line-height: 1.4em;
+        color: var(--dynamic-colour);
+      }
+
+
+      /*.copy--black { color: #000; }
+      .copy--black a { color: {{{account.colors.jb-grey}}}; }
+      .copy--bronze, .copy--bronze a { color: {{{ account.colors.jb-bronze }}}; }
+      .copy--green, .copy--green a { color: {{{ account.colors.jb-green }}}; }
+      .copy--blue, .copy--blue a { color: #0096d7; }*/
+
+      .copy p { margin-bottom: 10px; }
+      .copy p:last-child { margin-bottom: 0; }
+
+      .content .copy p { color: #000; }
+      .content .copy li { color: #000; }
+
+      .copy h1 {
+        margin-bottom: 0.2em;
+        font-size: 30.1px;
+        line-height: 1.2em;
+        font-weight: bold;
+      } 
+
+      .copy h2 {
+        margin-bottom: 0.3em;
+        font-size: 20.5px;
+        line-height: 1.2em;  
+      }  
+
+      .copy h3 {
+        margin-bottom: 0.3em;
+        font-size: 17.5px;
+        line-height: 1.2em;
+      }
+
+      /*.copy a {  text-decoration: none;  }*/
+
+      ul { margin-bottom: 10px; }
+
+      li {
+        position: relative;
+        margin-left: 13px;
+      }
+
+      ul li:before {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 8px;
+        left: -12px;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #000;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 60px;
+      }
+
+      .footerImage {
+        margin-top: 14px;
+        max-width: 225px;
+        max-height: 225px;
+        margin-bottom: 0.3rem;
+      }
+
+      .footer__text {
+        margin-bottom: 10px;
+        padding: 0 107px;
+        font-size: 12.8px;
+        line-height: 1.4em;
+        color: var(--dynamic-colour);;
+      }
+
+      .footer h2{
+        font-size: 15px;
+        line-height: 2;
+        font-weight: bold;
+      }
+
+
+      /*
+      .initialColor--blue .footer__text { color: #0096d7; }
+      .initialColor--bronze .footer__text { color: {{{ account.colors.jb-bronze }}}; }
+      .initialColor--green .footer__text { color: {{{ account.colors.jb-green }}}; }*/
+
+      .table {
+        margin: 20px 5px;
+        width: 100%;
+        font-size: 12px;
+        background: #fff;
+      }
+
+      .body--rightColLarge .table { margin-left: -10px; }
+      .body--singleCol .table { margin: 20px 0px; }
+      .body--bothCol .table { margin: 20px 0px; }
+
+      .table__header {
+        width: 25%;
+        padding: 8px 7px 5px;
+        font-size: 13.6px;
+        text-transform: uppercase;
+        font-weight: 400;
+        letter-spacing: -2px;
+        color: #fff;
+        background: var(--dynamic-colour);
+
+      }
+
+      th:nth-last-child(2):first-child, 
+      th:nth-last-child(2):first-child ~ th {
+        width: 50%;
+      }
+
+      th:nth-last-child(3):first-child, 
+      th:nth-last-child(3):first-child ~ th {
+        width: 33.3%;
+      }
+
+      th:nth-last-child(4):first-child, 
+      th:nth-last-child(4):first-child ~ th {
+        width: 25%;
+      }
+
+      th:nth-last-child(5):first-child, 
+      th:nth-last-child(5):first-child ~ th {
+        width: 20%;
+      }
+
+      .table__header tr td {
+        border: 1px solid var(--dynamic-colour);
+      }
+
+
+
+
+      /*.initialColor--black .table__header { background: #000; }
+      .initialColor--blue .table__header { background: #0096d7; }
+      .initialColor--bronze .table__header { background: {{{ account.colors.jb-bronze }}}; }
+      .initialColor--green .table__header { background: {{{ account.colors.jb-green }}};}*/
+
+      /*.table tr td { 
+      padding: 5px 7px 5px;
+      border: 1px solid {{{account.colors.jb-grey}}}; 
+      }*/
+
+
+      /*.initialColor--black .table__header tr td { border: 1px solid #000; }
+      .initialColor--blue .table__header tr td { border: 1px solid #0096d7; }
+      .initialColor--bronze .table__header tr td { border: 1px solid {{{ account.colors.jb-bronze }}}; }
+      .initialColor--blue .table__header tr td { border: 1px solid {{{ account.colors.jb-green }}}; }    */
+
+      .table--equalCols td:first-child { width: 50%; }
+      .table--rightColLarge td:first-child { width: 25%; }
+      .table--leftColLarge td:first-child { width: 75%; }
+
+      .table--threeColumn.table--equalCols td:first-child { width: 33%; }
+      .table--threeColumn.table--rightColLarge td:first-child { width: 25%; }
+      .table--threeColumn.table--leftColLarge td:first-child { width: 50%; }
+
+      .table--threeColumn.table--equalCols td:last-child { width: 33%; }
+      .table--threeColumn.table--rightColLarge td:last-child { width: 50%; }
+      .table--threeColumn.table--leftColLarge td:last-child { width: 25%; }
+
+      tr:first-child { color: #000000; background: #ffffff; }
+      .initialColor--blue .tableHeader--show tr:first-child { background: #0096d7; color: #fff; }
+      .initialColor--bronze .tableHeader--show tr:first-child { background: {{{ account.colors.jb-bronze }}}; color: #fff; }
+      .initialColor--green .tableHeader--show tr:first-child { background: {{{ account.colors.jb-green }}}; color: #fff; }
+
+
+      tr:first-child td { border: 1px solid {{account.colors.jb-grey}}; }
+      .initialColor--blue .tableHeader--show tr:first-child td { background: #0096d7; color: #fff; border: 1px solid #0096d7; }
+      .initialColor--bronze .tableHeader--show tr:first-child { background: {{{ account.colors.jb-bronze }}}; color: #fff; border: 1px solid {{{ account.colors.jb-bronze }}};  }
+      .initialColor--green .tableHeader--show tr:first-child { background: {{{ account.colors.jb-green }}}; color: #fff; border: 1px solid {{ account.colors.jb-green }}}; }
+
+
+      .tableHeader--show tr:nth-child(2) td,
+      .tableHeader-- tr:nth-child(2) td {
+        border-top: none;
+      }
+
+      .detail__container {
+        display: flex;
+        border-top: 1px solid #000;
+        border-bottom: 1px solid #000;
+        margin-top: -4px;
+        font-size: 12.9px;
+        line-height: 10.1px;
+        font-family: 'Calibri';
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .detail__container--secondary {
+        margin-top: 0;
+        border-top: none;
+      }
+
+      .detail {
+        display: flex;
+        margin-right: 15px;
+        padding: 9px 0 9px;
+      }
+
+      .detail__title {
+        margin-right: 5px;
+        font-weight: bold;
+      }
+
+      .detail__title::after { content: ':'; }
+
+      .imageBlock {
+        position: relative;
+        height: 180px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .body--singleCol .imageBlock { height: 360px; }
+      .body--bothCol .imageBlock { height: 360px; }
+
+      .header--noLogo {
+        display: none;
+        height: 50px;
+      }
+
+      .no-logo .header--noLogo { display: block; }
+
+      .u-logo-alignment--right { flex-direction: row-reverse;}
+
+      .initialColor--green h1, .initialColor--green h2, .initialColor--green h3, .initialColor--green a{
+        color: {{{ account.colors.jb-green }}};
+      }
+
+      .initialColor--blue h1, .initialColor--blue h2, .initialColor--blue h3, .initialColor--blue a{
+        color: {{{ account.colors.jb-blue }}};
+      }
+
+      .initialColor--bronze h1, .initialColor--bronze h2, .initialColor--bronze h3, .initialColor--bronze a{
+        color: {{{ account.colors.jb-bronze }}};
+      }
+
+      .initialColor--black h1, .initialColor--black h2, .initialColor--black h3, .initialColor--black a{
+        color: #000;
+      }
+
+
+      h1, h2, h3, a {
+        color: var(--dynamic-colour);
+      }
+
+
+
+      .tableHeader--show tr:first-child {
+        background: var(--dynamic-colour);
+        height: 25px;
+        color: var(--white);
+        text-transform: uppercase;
+      }
+
+      .tableHeader--show tr:first-child h1,
+      .tableHeader--show tr:first-child h2,
+      .tableHeader--show tr:first-child strong {
+        color: var(--white);
+      }
+
+      .table__header tr td, td{
+        border: 1px solid var(--jb-grey);
+        padding: 5px;
+      }
+
+
+      .logoBlock {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .logoBlock img {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        text-align: center;
+        padding: 0.1rem;
+      }
+
+      .logoPosition--left { justify-content: flex-start; }
+      .logoPosition--center { justify-content: center; }
+      .logoPosition--right { justify-content: flex-end; }
+
+      .logoBlock__image {
+        width: 21%;
+        margin: 0 10px 15px;
+        object-fit: contain;
+      }
+
+      .body--equalCols .col--left .logoBlock__image,
+      .body--equalCols .col--right .logoBlock__image {
+        width: 17%;
+        margin: 0 10px 10px;
+      }
+
+      .logoHeight--small .logoBlock__image { height: 75px; }
+      .logoHeight--medium .logoBlock__image { height: 150px; }
+      .logoHeight--large .logoBlock__image { height: 300px; }
+
+      .centerLogoBlock {
+        width: 100%;
+        height: 680px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .fit--largeSingleImage .centerLogoBlock {
+        height: 420px;
+      }
+
+      .centerLogoBlock img{
+        width: 50%;
+        padding-bottom: 10px;
+      }
+
+      .u-hide { display: none; }
+
+      .u-align-self-center { align-self: center; }
+
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      
+      /*Below lies some hacky code to get around some other hacky legacy code. Rest in Peace*/
+      .header.header--largeSingleImage .header__text.header__text--primary {
+        align-items: flex-end !important;
+        text-align: center !important;
+      }
+
+      .header--largeSingleImage.header--logoTop {
+        justify-content: space-between;
+      }
+
+      .header--largeSingleImage .header__text--primary{
+        display: block !important;
+      }
+
+      .header.header--largeSingleImage.header--logoCenter {
+        justify-content: space-between;
+      }
+
+      .header.header--largeSingleImage.header--logoBot .header__text.header__text--primary {
+        margin-top: 0.3rem;
+      }
+      
+      .header--largeSingleImage .headerLogo__container{
+        flex: 1;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>  
+  <body style="background: white" class="{{ placeholder-toggle }} {{#brand-color-options}} initialColor--{{brand-color-options}}{{/brand-color-options}} 
+                                         {{^brand-color-options}} initialColor--black {{/brand-color-options}}" data-crop="{{show-crop}}">    
+
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <span class="placeholder__trigger">   
+          <div class="placeholderBtn__container">
+            <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+          </div>
+          <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <title>background</title>
+              <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+            </g>
+          </svg>
+        </span><!-- end placeholder__trigger -->
+        <div class="placeholder__container">
+          <div class="placeholder"></div>
+        </div><!-- end placeholder__container -->
+
+        <div class="container fit  {{#collection.JB_header-collection--fd}}{{#block.JB_header-large-single-image--fd}}fit--largeSingleImage{{/block.JB_header-large-single-image--fd}} {{/collection.JB_header-collection--fd}}  ">
+
+          {{#collection.JB_header-collection--fd}}        
+
+          {{#block.JB_header-small-logo--fd}}
+          <div class="header header--smallLogo">
+            {{#JB_logo--fd}}<img src="{{JB_logo--fd}}" class="headerLogo" style="max-width: {{JB_logo-scaling-input--fd}}%; max-height: {{JB_logo-scaling-input--fd}}%;"/>{{/JB_logo--fd}}
+          </div><!-- end of header -->
+          {{/block.JB_header-small-logo--fd}}
+
+          {{#block.JB_header-small-logo-with-text--fd}}
+          <div class="header header--smallLogoWithText u-logo-alignment--{{JB_logo-alignment--fd}} {{^JB_logo--fd}}no-logo{{/JB_logo--fd}}">
+            {{#JB_logo--fd}}<img src="{{JB_logo--fd}}" class="header__logo" />{{/JB_logo--fd}}
+            <div class="header__copy" data-max-line="7"> {{{JB_header-copy--fd}}} </div> <!-- header copy -->
+          </div> <!-- header -->
+          {{/block.JB_header-small-logo-with-text--fd}}
+
+          {{#block.JB_header-small-single-image--fd}}
+          <div class="header header--largeSingleImage header--{{JB_logo-position--fd}} u-header-small {{^JB_logo--fd}}no-logo{{/JB_logo--fd}}">
+            {{#JB_logo--fd}}            
+            <div class="headerLogo__container" style="height: {{#JB_logo-scaling-input--fd}}calc(100.6px/100*{{JB_logo-scaling-input--fd}}){{/JB_logo-scaling-input--fd}} {{^JB_logo-scaling-input--fd}}100.6px{{/JB_logo-scaling-input--fd}};">
+              <img src="{{JB_logo--fd}}" class="headerLogo" />
+            </div>
+            {{/JB_logo--fd}}
+            {{#JB_header-copy--fd}} 
+            <div class="header__text header__text--primary"> 
+              <div class="header__inner" data-max-height="dynamic">
+                {{{JB_header-copy--fd}}} 
+              </div> <!-- header__inner -->
+            </div> <!-- header__text --> 
+            <div class="header__text header__text--secondary"> 
+              <div class="header__inner" data-max-height="dynamic">
+                {{{JB_header-copy--fd}}} 
+              </div> <!-- header__inner -->
+            </div> <!-- header__text --> 
+            {{/JB_header-copy--fd}}
+            <div class="headerImage__container">
+              <div class="headerImage backgroundColor--{{JB_background-color--fd}} headerImage--background"> {{{ JB_header-Image--fd }}} </div>
+            </div><!--end of headerImage__container-->
+          </div><!-- end of header -->
+          {{/block.JB_header-small-single-image--fd}}         
+
+          {{#block.JB_header-large-single-image--fd}}
+          <div class="header header--largeSingleImage header--{{JB_logo-position--fd}} {{^JB_logo--fd}}no-logo{{/JB_logo--fd}}">
+            {{#JB_logo--fd}}
+            <div class="headerLogo__container">
+              <img src="{{JB_logo--fd}}" class="headerLogo" style="width: {{JB_logo-scaling-input--fd}}{{^JB_logo-scaling-input--fd}}30{{/JB_logo-scaling-input--fd}}%;"/>
+            </div>
+            {{/JB_logo--fd}}
+            {{#JB_header-copy--fd}} 
+            <div class="header__text header__text--primary"> 
+              <div class="header__inner"  data-max-height="125">
+                <!--working here-->{{{JB_header-copy--fd}}}
+              </div> <!-- header__inner -->
+            </div> <!-- header__text --> 
+            {{/JB_header-copy--fd}}
+            <div class="headerImage__container">
+              <div class="headerImage backgroundColor--{{JB_background-color--fd}} headerImage--background"> {{{ JB_header-Image--fd }}} </div>
+            </div><!--end of headerImage__container-->
+          </div><!-- end of header -->
+          {{/block.JB_header-large-single-image--fd}}          
+
+
+          {{/collection.JB_header-collection--fd}}
+
+
+          <div class="body body--bothCol">
+            {{#collection.ISCfd_column}}
+            <div class="col col--parent {{#collection.ICSfd_content-blocks}}{{#block.centerLogo}}u-align-self-center{{/block.centerLogo}}{{/collection.ICSfd_content-blocks}} " data-max-height="dynamic">
+              <div class="col col--both">
+                <div class="block__container">
+                  {{ #collection.ICSfd_content-blocks }}
+                  {{ #block.ICSfd_quote }}
+                  <div class="quote block">
+                    {{{ ICSfd_quote }}}
+                  </div><!-- end of quote -->
+                  {{ /block.ICSfd_quote }}   
+                  {{ #block.ICSfd_content-fp }}
+                  <div class="content block">
+                    {{ #ICSfd_copy }}
+                    <div class="copy">
+                      {{{ ICSfd_copy }}}
+                    </div> <!-- end of copy -->
+                    {{ /ICSfd_copy }}
+                  </div><!-- end of content-->
+                  {{ /block.ICSfd_content-fp }}
+                  {{ #block.ICSfd_image }}
+                  <div class="imageBlock block">
+                    <div class="reposition-fix">
+                      {{{ image }}}
+                    </div> <!-- reposition-fix-->
+                  </div><!-- end of image -->
+                  {{ /block.ICSfd_image }}      
+                  {{#block.centerLogo}}
+                  <div class="centerLogoBlock">
+                    {{#logo}}<img src="{{{logo}}}"/>{{/logo}}
+                  </div>
+                  {{/block.centerLogo}}
+                  {{ #block.JB_table-two-column--fd }}
+                  <table class="table block table--twoColumn table--{{JB_table-columns-size2--fd}}{{^JB_table-columns-size2--fd}}equalCols{{/JB_table-columns-size2--fd}} tableHeader--{{JB_table-header}}">
+                    {{ #spreadsheet.JB_table-two-column-content }}
+                    <tr>                                                                  
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-two-column-content-1--1fd }}</div>
+                      </td>
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-two-column-content-2--1fd }}</div>
+                      </td>                    
+                    </tr>
+                    {{ /spreadsheet.JB_table-two-column-content }}
+                  </table>
+                  {{ /block.JB_table-two-column--fd }}
+                  {{ #block.JB_table-three-column--fd }}
+                  <table class="table block table--threeColumn table--{{JB_table-columns-size1}}{{^JB_table-columns-size1}}equalCols{{/JB_table-columns-size1}} tableHeader--{{JB_table-header1}}">
+                    {{ #spreadsheet.JB_table-three-column-content1 }}
+                    <tr>
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-three-column-content-1--1fd }}</div>
+                      </td>
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-three-column-content-2--1fd }}</div>
+                      </td>       
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-three-column-content-3--1fd }}</div>
+                      </td>      
+                    </tr>
+                    {{ /spreadsheet.JB_table-three-column-content1 }}
+                  </table>
+                  {{ /block.JB_table-three-column--fd }}
+                  {{ #block.JB_table-four-column--fd }}
+                  <table class="table block table--fourColumn tableHeader--{{JB_table-header--1fd}}">
+                    {{ #spreadsheet.JB_table-four-column-content1 }}
+                    <tr>
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-four-column-content-1--1fd }}</div>
+                      </td>
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-four-column-content-2--1fd }}</div>
+                      </td>       
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-four-column-content-3--1fd }}</div>
+                      </td>  
+                      <td class="table__cell">
+                        <div class="js-customRichText-src">{{ JB_table-four-column-content-4--1fd }}</div>
+                      </td>  
+                    </tr>
+                    {{ /spreadsheet.JB_table-four-column-content1 }}
+                  </table>
+                  {{ /block.JB_table-four-column--fd }}    
+                  {{#block.JB_logo-block--fd}}
+                  <div class="logoBlock logoHeight--{{JB_logo-height--fd}}{{^JB_logo-height--fd}}small{{/JB_logo-height--fd}} logoPosition--{{JB_logo-position--fd}}{{^JB_logo-position--fd}}left{{/JB_logo-position--fd}}">
+                    {{#collection.JB_logo--fd}}
+                    {{#JB_logo--fd}}
+                    <img src="{{JB_logo--fd}}" class="logoBlock__image" />
+                    {{/JB_logo--fd}}
+                    {{/collection.JB_logo--fd}}
+                  </div> <!--- logoBlock -->
+                  {{/block.JB_logo-block--fd}}
+                  {{/collection.ICSfd_content-blocks}}
+                </div> <!-- end of block -->
+
+              </div><!-- end of col--both -->        
+            </div><!-- end of check-overflow -->
+            {{/collection.ISCfd_column}}
+          </div><!-- end of body -->   
+          {{#collection.JB_footer--fd}}
+          <div class="footer" style="flex-direction: {{footer-order}}{{^footer-order}}column{{/footer-order}}">
+            {{#JB_footer-text--fd}} <div class="footer__text" data-max-line="4"> {{{JB_footer-text--fd}}} </div> <!-- footer__text --> {{/JB_footer-text--fd}}
+            <img src="{{JB_footer-logo--fd}}" class="footerImage" style="max-width: {{JB_footer-logo-scaling-input--fd}}%; max-height: {{JB_footer-logo-scaling-input--fd}}%;"/>
+          </div><!-- end of footer -->
+          {{/collection.JB_footer--fd}}
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+    {{#collection.ICSfd_pages}}
+    {{#block.ICSfd_internal-page}}
+    <div class="page header--smallLogo a">
+
+      <div class="bleed center-children">
+
+        <span class="placeholder__trigger">   
+          <div class="placeholderBtn__container">
+            <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+          </div>
+          <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <title>background</title>
+              <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+            </g>
+          </svg>
+        </span><!-- end placeholder__trigger -->
+        <div class="placeholder__container">
+          <div class="placeholder"></div>
+        </div><!-- end placeholder__container -->
+
+        <div class="container fit {{^JB_logo--fd}}no-logo{{/JB_logo--fd}}">
+          <div class="header header--smallLogo">
+            {{#JB_logo--fd}}
+            <img src="{{JB_logo--fd}}" class="headerLogo headeerLogo--additionalPages" style="max-width: {{JB_logo-scaling-input--fd}}%;" />
+            {{/JB_logo--fd}}
+          </div><!-- end of header -->
+
+          <div class="header--noLogo"></div>
+          <div class="body body--equalCols">
+            <div class="col col--left" data-max-height="dynamic">
+              <div class="block__container">
+                {{ #collection.ICSfd_column-left }}
+                {{ #block.ICSfd_quote }}
+                <div class="quote block">
+                  {{{ ICSfd_quote }}}
+                </div><!-- end of quote -->
+                {{ /block.ICSfd_quote }}   
+                {{ #block.ICSfd_IP-content }}
+                <div class="content block">
+                  {{ #ICSfd_copy }} 
+                  <div class="copy">
+                    {{{ ICSfd_copy }}}
+                  </div> <!-- end of copy -->
+                  {{ /ICSfd_copy }}
+                </div><!-- end of content-->
+                {{ /block.ICSfd_IP-content }}          
+                {{ #block.ICSfd_IP-work-instruction }}
+                <div class="block">
+                  {{ #ICSfd_heading }}
+                  <div class="heading heading--alt">{{ ICSfd_heading }}</div>
+                  {{ /ICSfd_heading }}
+                  <div>
+                    <div class="detail__container check-h-overflow {{^spreadsheet.ICSfd_IP-details}}u-hide{{/spreadsheet.ICSfd_IP-details}}">
+                      {{ #spreadsheet.ICSfd_IP-details }}
+                      <div class="detail">
+                        <div class="detail__title">{{ ICSfd_detail-title }}</div>
+                        <div class="detail__content">{{ ICSfd_detail-content }}</div>
+                      </div><!-- end detail -->
+                      {{ /spreadsheet.ICSfd_IP-details }}
+                    </div><!-- end detail__container -->
+                  </div>
+                  {{#ICSfd_second-row}}
+                  <div class="detail__container detail__container--secondary check-h-overflow">
+                    <div class="detail">
+                      {{{ICSfd_second-row}}}
+                    </div><!-- end detail -->
+                  </div><!-- end detail__container -->
+                  {{/ICSfd_second-row}}                    
+                </div><!-- end block -->
+                {{ /block.ICSfd_IP-work-instruction }}  
+                {{ #block.ICSfd_image }}
+                <div class="imageBlock block">
+                  <div class="reposition-fix">
+                    {{{ ICSfd_image }}}
+                  </div> <!--reposition-fix -->
+                </div><!-- end of image -->
+                {{ /block.ICSfd_image }}
+                {{ #block.JB_table-two-column--1fd }}
+                <table class="table block table--twoColumn table--{{JB_table-columns-size--1fd}}{{^JB_table-columns-size--1fd}}equalCols{{/JB_table-columns-size--1fd}} tableHeader--{{JB_table-header--1fd}}">
+                  {{ #spreadsheet.JB_table-two-column-content--1fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-1--1fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-2--1fd }}</div>
+                    </td>                    
+                  </tr>
+                  {{ /spreadsheet.JB_table-two-column-content--1fd }}
+                </table>
+                {{ /block.JB_table-two-column--1fd }}
+                {{ #block.JB_table-three-column--1fd }}
+                <table class="table block table--threeColumn table--{{JB_table-columns-size--1fd}}{{^JB_table-columns-size--1fd}}equalCols{{/JB_table-columns-size--1fd}} tableHeader--{{JB_table-header--1fd}}">
+                  {{ #spreadsheet.JB_table-three-column-content--1fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-1--1fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-2--1fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-3--1fd }}</div>
+                    </td>      
+                  </tr>
+                  {{ /spreadsheet.JB_table-three-column-content--1fd }}
+                </table>
+                {{ /block.JB_table-three-column--1fd }}
+                {{ #block.JB_table-four-column--1fd }}
+                <table class="table block table--fourColumn tableHeader--{{JB_table-header--1fd}}">
+                  {{ #spreadsheet.JB_table-four-column-content--fld }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-1--fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-2--fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-3--fd }}</div>
+                    </td>  
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-4--fd }}</div>
+                    </td>  
+                  </tr>
+                  {{ /spreadsheet.JB_table-four-column-content--fld }}
+                </table>
+                {{ /block.JB_table-four-column--1fd }}  
+                {{#block.JB_logo-block--fd2}}
+                <div class="logoFlex">
+                  <div class="logoBlock logoHeight--{{JB_logo-height--fd3}}{{^JB_logo-height--fd3}}small{{/JB_logo-height--fd3}} logoPosition--{{JB_logo-position--fd2}}{{^JB_logo-position--fd2}}left{{/JB_logo-position--fd2}}">
+                    {{#collection.JB_logo--fd2}}
+                    {{#JB_logo--fd2}}
+                    <img src="{{JB_logo--fd2}}" class="logoBlock__image" />
+                    {{/JB_logo--fd2}}
+                    {{/collection.JB_logo--fd2}}
+                  </div> <!--- logoBlock -->
+                </div> <!-- logo-flex -->
+                {{/block.JB_logo-block--fd2}}
+
+                {{ /collection.ICSfd_column-left }}
+              </div><!-- end of check-overflow -->
+            </div><!-- end of col--left -->
+
+            <div class="col col--right"  data-max-height="dynamic">
+              <div class="block__container">
+                {{ #collection.ICSfd_column-right }}
+                {{ #block.ICSfd_quote }}
+                <div class="quote block">
+                  {{{ ICSfd_quote }}}
+                </div><!-- end of quote -->
+                {{ /block.ICSfd_quote }}   
+                {{ #block.ICSfd_IP-content }}
+                <div class="content block">
+                  {{ #ICSfd_copy }}
+                  <div class="copy">
+                    {{{ ICSfd_copy }}}
+                  </div> <!-- end of copy -->
+                  {{/ICSfd_copy}}
+                </div><!-- end of content-->
+                {{ /block.ICSfd_IP-content }}      
+                {{ #block.ICSfd_IP-work-instruction }}
+                <div class="block">
+                  {{ #ICSfd_heading }}
+                  <div class="heading heading--alt">{{ ICSfd_heading }}</div>
+                  {{ /ICSfd_heading }}
+                  <div>
+                    <div class="detail__container check-h-overflow {{^spreadsheet.ICSfd_IP-details}}u-hide{{/spreadsheet.ICSfd_IP-details}}">
+                      {{ #spreadsheet.ICSfd_IP-details }}
+                      <div class="detail">
+                        <div class="detail__title">{{ ICSfd_detail-title }}</div>
+                        <div class="detail__content">{{ ICSfd_detail-content }}</div>
+                      </div><!-- end detail -->
+                      {{ /spreadsheet.ICSfd_IP-details }}
+                    </div><!-- end detail__container -->
+                  </div>
+                  {{#ICSfd_second-row}}
+                  <div class="detail__container detail__container--secondary check-h-overflow">
+                    <div class="detail">
+                      {{{ICSfd_second-row}}}
+                    </div><!-- end detail -->
+                  </div><!-- end detail__container -->
+                  {{/ICSfd_second-row}}                    
+                </div><!-- end block -->
+                {{ /block.ICSfd_IP-work-instruction }}
+                {{ #block.ICSfd_image }}
+                <div class="imageBlock block">
+                  <div class="reposition-fix">
+                    {{{ ICSfd_image }}}
+                  </div><!-- reposition-fix -->
+                </div><!-- end of image -->
+                {{ /block.ICSfd_image }} 
+                {{ #block.JB_table-two-column--2fd }}
+                <table class="table block table--twoColumn table--{{JB_table-columns-size--2fd}}{{^JB_table-columns-size--2fd}}equalCols{{/JB_table-columns-size--2fd}} tableHeader--{{JB_table-header-alt--2fd}}">
+                  {{ #spreadsheet.JB_table-two-column-content-alt--2fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-1--2fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-2--2fd }}</div>
+                    </td>                    
+                  </tr>
+                  {{ /spreadsheet.JB_table-two-column-content-alt--2fd }}
+                </table>
+                {{ /block.JB_table-two-column--2fd }}
+                {{ #block.JB_table-three-column--2fd }}
+                <table class="table block table--threeColumn table--{{JB_table-columns-size--2fd}}{{^JB_table-columns-size--2fd}}equalCols{{/JB_table-columns-size--2fd}} tableHeader--{{JB_table-header-alt--2fd}}">
+                  {{ #spreadsheet.JB_table-three-column-content-alt--2fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-1--2fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-2--2fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-3--2fd }}</div>
+                    </td>      
+                  </tr>
+                  {{ /spreadsheet.JB_table-three-column-content-alt--2fd }}
+                </table>
+                {{ /block.JB_table-three-column--2fd }}
+                {{ #block.JB_table-four-column--2fd }}
+                <table class="table block table--fourColumn tableHeader--{{JB_table-header-alt--2fd}}">
+                  {{ #spreadsheet.JB_table-four-column-content-alt--2fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-1--2fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-2--2fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-3--2fd }}</div>
+                    </td>  
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-4--2fd }}</div>
+                    </td>  
+                  </tr>
+                  {{ /spreadsheet.JB_table-four-column-content-alt--2fd }}
+                </table>
+                {{ /block.JB_table-four-column--2fd }}  
+                {{#block.JB_logo-block--fd2}}
+                <div class="logoBlock logoHeight--{{JB_logo-height--fd3}}{{^JB_logo-height--fd3}}small{{/JB_logo-height--fd3}} logoPosition--{{JB_logo-position--fd2}}{{^JB_logo-position--fd2}}left{{/JB_logo-position--fd2}}">
+                  {{#collection.JB_logo--fd2}}
+                  {{#JB_logo--fd2}}
+                  <img src="{{JB_logo--fd2}}" class="logoBlock__image" />
+                  {{/JB_logo--fd2}}
+                  {{/collection.JB_logo--fd2}}
+                </div> <!--- logoBlock -->
+                {{/block.JB_logo-block--fd2}}
+                {{ /collection.ICSfd_column-right }} 
+              </div><!-- end of check-overflow -->
+            </div><!-- end of col--right -->
+          </div><!-- end of body -->            
+          <div class="footer">
+            {{#JB_footer-text--fd}} <div class="footer__text" data-max-line="4"> {{{JB_footer-text--fd}}} </div> <!-- footer__text --> {{/JB_footer-text--fd}}
+            <img src="{{JB_footer-logo--fd}}" class="footerImage" style="max-width: {{JB_footer-logo-scaling-input--fd}}%; max-height: {{JB_footer-logo-scaling-input--fd}}%;"/>
+          </div><!-- end of footer -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    <!-- Internal Page - Single Column -->
+    {{/block.ICSfd_internal-page}}
+    {{#block.ICSfd_internal-page-single-column}}
+    <div class="page header--smallLogo">
+
+      <div class="bleed center-children">
+
+        <div class="container fit {{^JB_logo--fd}}no-logo{{/JB_logo--fd}}">
+          <div class="header header--smallLogo">
+            {{#JB_logo--fd}}
+            <img src="{{JB_logo--fd}}" class="headerLogo headeerLogo--additionalPages" style="max-width: {{JB_logo-scaling-input--fd}}%;" />
+            {{/JB_logo--fd}}
+          </div><!-- end of header -->
+
+          <div class="header--noLogo"></div>
+          <div class="body body--singleCol">
+            <div class="col col--left" data-max-height="dynamic">
+              <div class="block__container">
+                {{ #collection.ICSfd_content-blocks }}
+                {{ #block.ICSfd_quote }}
+                <div class="quote block">
+                  {{{ ICSfd_quote }}}
+                </div><!-- end of quote -->
+                {{ /block.ICSfd_quote }}   
+                {{ #block.ICSfd_IP-content }}
+                <div class="content block">
+                  {{ #ICSfd_copy }} 
+                  <div class="copy">
+                    {{{ ICSfd_copy }}}
+                  </div> <!-- end of copy -->
+                  {{ /ICSfd_copy }}
+                </div><!-- end of content-->
+                {{ /block.ICSfd_IP-content }}            
+                {{ #block.ICSfd_IP-work-instruction }}
+                <div class="block">
+                  {{ #ICSfd_heading }}
+                  <div class="heading heading--alt">{{ ICSfd_heading }}</div>
+                  {{ /ICSfd_heading }}
+                  <div>
+                    <div class="detail__container check-h-overflow {{^spreadsheet.ICSfd_IP-details}}u-hide{{/spreadsheet.ICSfd_IP-details}}">
+                      {{ #spreadsheet.ICSfd_IP-details }}
+                      <div class="detail">
+                        <div class="detail__title">{{ ICSfd_detail-title }}</div>
+                        <div class="detail__content">{{ ICSfd_detail-content }}</div>
+                      </div><!-- end detail -->
+                      {{ /spreadsheet.ICSfd_IP-details }}
+                    </div><!-- end detail__container -->
+                  </div>
+                  {{#ICSfd_second-row}}
+                  <div class="detail__container detail__container--secondary check-h-overflow">
+                    <div class="detail">
+                      {{{ICSfd_second-row}}}
+                    </div><!-- end detail -->
+                  </div><!-- end detail__container -->
+                  {{/ICSfd_second-row}}                    
+                </div><!-- end block -->
+                {{ /block.ICSfd_IP-work-instruction }}  
+                {{ #block.ICSfd_image }}
+                <div class="imageBlock block">
+                  <div class="reposition-fix">
+                    {{{ ICSfd_image }}}
+                  </div> <!-- reposition-fix -->
+                </div><!-- end of image -->
+                {{ /block.ICSfd_image }}   
+                {{ #block.JB_table-two-column--fd }}
+                <table class="table block table--twoColumn table--{{JB_table-columns-size--fd}}{{^JB_table-columns-size--fd}}equalCols{{/JB_table-columns-size--fd}} tableHeader--{{JB_table-header--fd}}">
+                  {{ #spreadsheet.JB_table-two-column-content--fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-1--fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-two-column-content-2--fd }}</div>
+                    </td>                    
+                  </tr>
+                  {{ /spreadsheet.JB_table-two-column-content--fd }}
+                </table>
+                {{ /block.JB_table-two-column--fd }}
+                {{ #block.JB_table-three-column--fd }}
+                <table class="table block table--threeColumn table--{{JB_table-columns-size--fd}}{{^JB_table-columns-size--fd}}equalCols{{/JB_table-columns-size--fd}} tableHeader--{{JB_table-header--fd}}">
+                  {{ #spreadsheet.JB_table-three-column-content--fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-1--fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-2--fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-three-column-content-3--fd }}</div>
+                    </td>      
+                  </tr>
+                  {{ /spreadsheet.JB_table-three-column-content--fd }}
+                </table>
+                {{ /block.JB_table-three-column--fd }}
+                {{ #block.JB_table-four-column--fd }}
+                <table class="table block table--fourColumn tableHeader--{{JB_table-header--fd}}">
+                  {{ #spreadsheet.JB_table-four-column-content--fd }}
+                  <tr>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-1--fd }}</div>
+                    </td>
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-2--fd }}</div>
+                    </td>       
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-3--fd }}</div>
+                    </td>  
+                    <td class="table__cell">
+                      <div class="js-customRichText-src">{{ JB_table-four-column-content-4--fd }}</div>
+                    </td>  
+                  </tr>
+                  {{ /spreadsheet.JB_table-four-column-content--fd }}
+                </table>
+                {{ /block.JB_table-four-column--fd }}  
+                {{#block.JB_logo-block--fd2}}
+                <div class="logoBlock logoHeight--{{JB_logo-height--fd3}}{{^JB_logo-height--fd3}}small{{/JB_logo-height--fd3}} logoPosition--{{JB_logo-position--fd2}}{{^JB_logo-position--fd2}}left{{/JB_logo-position--fd2}}">
+                  {{#collection.JB_logo--fd2}}
+                  {{#JB_logo--fd2}}
+                  <img src="{{JB_logo--fd2}}" class="logoBlock__image" />
+                  {{/JB_logo--fd2}}
+                  {{/collection.JB_logo--fd2}}
+                </div> <!--- logoBlock -->
+                {{/block.JB_logo-block--fd2}}
+                {{ /collection.ICSfd_content-blocks }}
+              </div><!-- end of check-overflow -->
+
+            </div><!-- end of col--left -->
+          </div><!-- end of body -->            
+          <div class="footer footer--frontPage">
+            {{#JB_footer-text--fd}} <div class="footer__text" data-max-line="4"> {{{JB_footer-text--fd}}} </div> <!-- footer__text --> {{/JB_footer-text--fd}}
+            <img src="{{JB_footer-logo--fd}}" class="footerImage" style="max-width: {{JB_footer-logo-scaling-input--fd}}%; max-height: {{JB_footer-logo-scaling-input--fd}}%;"/>
+          </div><!-- end of footer -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    <!-- End Internal Page - single column -->
+    {{/block.ICSfd_internal-page-single-column}}
+    {{/collection.ICSfd_pages}}
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main-ext.js"></script>   
+    <script src="prefixfree.js"></script>
+    <script src="placeholder-controller.js"></script>
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script>
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+
+      function checkHorizontalOverflow() {
+        const elements = document.querySelectorAll('.check-h-overflow');
+
+        elements.forEach(element => {
+          const elementWidth = element.scrollWidth;
+          const parent = element.parentNode;
+          const parentWidth = parent.offsetWidth;
+
+          element.style.whiteSpace = 'nowrap';
+
+          if (elementWidth > parentWidth) {
+            parent.classList.add('overflow');
+          } else {
+            parent.classList.remove('overflow');
+          }
+
+          if ((element).parentNode.classList.contains('overflow')) {
+            document.body.classList.add('overflow-true', 'overflow-h-true');
+          } else {
+            document.body.classList.remove('overflow-true', 'overflow-h-true'); 
+          }          
+        });
+      }      
+
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          checkHorizontalOverflow() 
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      placeholderControler();             
+      checkCrop();  
+      checkExport(); 
+      charLimit();
+
+      // mapObj object is passed as an argument, so it would be possible to add this to snippets
+      // and create some conventions and rules for these marks and add new ones
+      const mapObj = {
+        '{b': '<strong>',
+        'b}': '</strong>',
+        '{i': '<i>',
+        'i}': '</i>',
+        '{h1': '<h1>',
+        'h1}': '</h1>',
+        '{h2': '<h2>',
+        'h2}': '</h2>',
+        '{nl}': '<br>'
+      };
+
+      function customRichText(mapObj) {
+        const sources = document.querySelectorAll('.js-customRichText-src');
+
+        sources.forEach((source, index) => {
+          // Hiding all the source elements
+          source.style.cssText = 'opacity: 0; position: absolute;';
+          // Adding 'position: relative' to parent element so the source is absolutely positioned
+          // according to it's first parent
+          source.parentNode.style.position = 'relative';
+
+          let formated = source.innerText;
+
+          // Creating a regular expression with all the keys from the mapObj
+          const regexp = new RegExp(Object.keys(mapObj).join('|'), 'gi');
+          // Running a replace method and providing the created regExp 
+          // and adding a function as a second argument
+          formated = formated.replace(regexp, (matched) => {
+            return mapObj[matched.toLowerCase()];
+          });
+
+          if ( source.parentNode.querySelector('.js-customRichText-target') === null ) {
+            const target = document.createElement('div');
+            target.classList.add('js-customRichText-target');
+            source.parentNode.appendChild(target);            
+            target.innerHTML = formated;          
+          }
+        })
+      };
+
+      checkHorizontalOverflow() 
+      customRichText(mapObj);
+
+    </script>
+
+
+  </body>
+</html>
