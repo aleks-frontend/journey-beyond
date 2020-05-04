@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head><title>Journey Beyond Digital Ads</title><meta name="ad.size" content="width=160,height=600"> <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+  <body>
+<style>
+html,body{margin:0;padding:0;word-break:break-all}img{height:auto;max-width:100%}
+.frameContainer{background:#465a65;width: 100%;height: 100%;position: absolute;overflow:hidden;display:flex}
+.frameContainer{display:flex;}
+.frame{position: absolute;width:100%;height: 100%;text-align:center}
+
+.terms{width: calc(100% - 0.6rem);position: absolute;bottom: 0;left: 0;z-index: 5;font-size: 0.6rem;text-align: center;margin:0.3rem;}
+.logo{object-fit:contain;z-index: 4;max-width: 70%;max-height: 20%;margin-left: 15%;}  
+  .frame .text{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    opacity: 0;
+  }
+</style>
+<!--{{fontSize}}-->
+<div class="frameContainer fs160x600">
+  <img class="logo" src="{{{digiAdLogo}}}">
+  {{#collection.digitalAdsStaticLogo}}
+    {{#block.frame}}
+      <div class="frame" data-show-logo="{{logoVisibility}}">
+        {{#digitalAdBackgroundImage_nrp}}
+        	<img style="width:100%; height: 100%; position:relative; top:0;left:0;" src="{{{ digitalAdBackgroundImage_nrp }}}">
+        {{/digitalAdBackgroundImage_nrp}}
+        <div style="width:100%; height: 100%; position:relative; top:0;left:0;background-color: {{backgroundBrandCol}}"></div>
+        <img class="text" style="top:-20px;" src="https://journeybeyond.outfit.io/projects/70195/documents/481402/dynamic_export?access_token=nRvKucZBZkdbj4KAHwAEQd1P&context%5BtextSpacing_da%5D={{textSpacing_da}}&context%5BformatSize%5D=fs160x600&context%5Bheading1_da%5D={{{heading1_da}}}&context%5Bparagraph_da%5D={{{paragraph_da}}}&context%5BtextMiddlePoint_da%5D={{{textMiddlePoint_da}}}">
+      </div>
+    {{/block.frame}}
+    {{#block.finalFrame}}
+      <div class="frame" data-show-logo="{{logoVisibility}}">
+        {{#digitalAdBackgroundImage_nrp}}
+        	<img style="width:100%; height: 100%; position:relative; top:0;left:0;" src="{{{ digitalAdBackgroundImage_nrp }}}">
+        {{/digitalAdBackgroundImage_nrp}}
+        <div style="width:100%; height: 100%; position:relative; top:0;left:0;background-color: {{backgroundBrandCol}}"></div>
+        <img class="text" style="top:-20px;" src="https://journeybeyond.outfit.io/projects/70195/documents/481402/dynamic_export?access_token=nRvKucZBZkdbj4KAHwAEQd1P&context%5BtextSpacing_da%5D={{textSpacing_da}}&context%5BformatSize%5D=fs160x600&context%5Bheading1_da%5D={{{heading1_da}}}&context%5Bparagraph_da%5D={{{paragraph_da}}}&context%5BctaText_da%5D={{{ctaText_da}}}&context%5BctaLink_da%5D={{{ctaLink_da}}}&context%5BtextMiddlePoint_da%5D={{{textMiddlePoint_da}}}&context%5BctaMiddlePoint_da%5D={{{ctaMiddlePoint_da}}}&context%5BctaBkgColor_da%5D={{{ctaBkgColor_da}}}">
+      </div>
+    {{/block.finalFrame}}
+  {{/collection.digitalAdsStaticLogo}}
+
+  <img class="terms" src="https://journeybeyond.outfit.io/projects/70195/documents/539380/dynamic_export?access_token=v3vmWmAdU2L1oU9cxdoBcLoT&context%5BformatSize%5D=fs160x600&context%5BtermsAndConditions%5D={{termsAndConditions}}&context%5BctaAlignment%5D={{{ctaAlignment}}}">
+  
+</div>
+
+
+    {{{account.snippets.staticLogosDigitalAds_JS}}}
+  </body>
+</html>
