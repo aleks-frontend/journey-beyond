@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html data-sign="OSM">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css');
+
+      :root {
+        --white: #fff;
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.gsr-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+      }
+
+      .colourTheme--cw-green {
+        --dynamic-colour: var(--cw-green);
+      }
+
+      .colourTheme--cw-blue {
+        --dynamic-colour: var(--cw-blue);
+      }
+
+      .colourTheme--rex {
+        --dynamic-colour: var(--rex);
+      }
+
+      .colourTheme--gsr-green {
+        --dynamic-colour: var(--gsr-green);
+      }
+
+      .colourTheme--gsr-blue {
+        --dynamic-colour: var(--gsr-blue);
+      }
+
+      .colourTheme--gsr-red {
+        --dynamic-colour: var(--gsr-red);
+      }
+
+      .colourTheme--jb-bronze {
+        --dynamic-colour: var(--jb-bronze);
+      }
+
+      .colourTheme--jb-green  {
+        --dynamic-colour: var(--jb-green);
+      }
+
+      .colourTheme--jb-grey  {
+        --dynamic-colour: var(--jb-grey);
+      }
+
+      html {
+        font-family: 'Styrene A';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        display: flex;
+        position: relative;
+        height: 102pt;
+        padding: 31pt 30pt 18pt 32pt;
+      }
+
+      .logo {
+        position: relative;
+        max-width: 260pt;
+        height: 100%;
+        margin-right: 35pt;
+        object-fit: contain;
+      }
+
+      .date__heading {
+        position: relative;
+        margin-bottom: 6pt;
+        font-size: 18.6pt;
+        line-height: 1.2em;
+        font-weight: bold;
+        letter-spacing: 1.9pt;
+        text-transform: uppercase;
+        color: var(--white);
+      }
+
+      .date {
+        position: relative;
+        display: flex;
+      }
+
+      .date__value,
+      .date__value + span {
+        font-size: 14.8pt;
+        line-height: 1.2em;
+        letter-spacing: 0.7pt;
+        color: var(--white);
+      }
+
+      .date__value.overflow:hover:after{
+        content: 'Invalid date entered';
+      }
+
+      .body {
+        flex: 1;
+        padding: 7pt 32pt;
+      }
+
+      .location {
+        margin-bottom: 4pt;
+        font-size: 14pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.8pt;
+        line-height: 1.2em;
+        color: var(--dynamic-colour);
+      }
+
+      .table {
+        width: 100%;
+        margin-bottom: 18pt;
+      }
+
+      .table:last-child {
+        margin-bottom: 0;
+      }
+
+      .table__row {
+        height: 16.9pt;
+      }
+
+      .table__cell,
+      .table__cell--alt {
+        font-size: 7pt;
+        text-align: center;
+        line-height: 1.2em;
+        font-weight: 500;
+        border: 1px solid var(--jb-grey);
+        border-left: none;
+        color: var(--jb-grey);
+      }
+
+      .tableFrom .table__cell.light,
+      .tableFrom .table__cell--alt.light{
+        font-weight: 300;
+      }
+
+      .table__cell:last-child,
+      .table__cell--alt:last-child {
+        border-right: none;
+      }
+
+      .table__cell.overflow:hover:after{
+        content: 'Max number of characters exceeded.';
+      }
+
+      .table__cell.cellContent.overflow:hover:after{
+        content: 'Invalid entry. Please only enter numbers.';
+      }
+
+      .table__title {
+        padding: 4pt;
+        font-size: 7.2pt;
+        text-align: center;
+        line-height: 1.2em;
+        text-transform: uppercase;
+        font-weight: bold;
+        border: 1px solid var(--white);
+        border-left: none;
+        background-color: var(--jb-grey);
+        color: var(--white);
+      }
+
+      .note {
+        width: 246pt;
+        padding: 3pt;
+        font-size: 9pt;
+        text-align: center;
+        line-height: 1.2em;
+        text-transform: uppercase;
+        font-weight: bold;
+        border: 1px solid var(--white);
+        border-right: none;
+        background: #e18067;
+        color: var(--white);
+      }
+
+      .table__heading {
+        width: 100pt;
+        font-size: 9pt;
+        text-align: center;
+        line-height: 1.2em;
+        font-weight: 500;
+        border: 1px solid var(--white);
+        border-left: none;
+        background: var(--dynamic-colour);
+        color: var(--white);
+      }
+
+      .footer {
+        height: 103pt;
+        padding: 4.2pt 31pt 15pt 31pt;
+      }
+      
+      .copy p{
+        margin-bottom: 11.1pt;
+      }
+
+      .copy p, .copy h4 {
+        font-size: 7pt;
+        line-height: 1.4em;
+        color: var(--jb-grey);
+        font-weight: 300;
+      }
+
+      .copy h4 {
+        color: var(--dynamic-colour);
+      }
+
+      .copy p:last-child {
+        margin-bottom: 0;
+      }
+
+      .p-l-165 {
+        padding-left: 165pt;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+    <!--
+ {{show-crop}}
+ {{placeholder-opacity}}
+ {{placeholder-image-1}}
+ {{placeholder-toggle-new}}
+ {{placeholder-validation}}
+ -->
+  </head>
+  <body style="background: white" data-crop="{{show-crop}}" class="colourTheme--{{{JB_colour-theme--fs}}}{{^JB_colour-theme--fs}}rex{{/JB_colour-theme--fs}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+    </div><!-- end placeholderMaster -->
+    <div class="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="header">
+            <div class="backgroundImage"><div class="reposition-fix">{{{JB_feature-image--fs}}}</div></div><!--backgroundImage-->
+            {{#JB_logo--fs}}
+            <img class="logo" src="{{{JB_logo--fs}}}">
+            {{/JB_logo--fs}}
+            <div class="date__container {{^JB_logo--fs}}p-l-165{{/JB_logo--fs}}">
+              <div class="date__heading" data-max-line="1">{{{JB_heading--fs}}}</div><!--date__heading-->
+              <div class="date">
+                {{#spreadsheet.JB_start-date--fs}}
+                <div class="date__value"><span class="day">{{start-date}}</span></div><span>/</span><!--date__value-->
+                <div class="date__value"><span class="month">{{start-month}}</span></div><span>/</span><!--date__value-->
+                <div class="date__value"><span class="year">{{start-year}}</span></div><span>&nbsp;-&nbsp;</span><!--date__value-->
+                {{/spreadsheet.JB_start-date--fs}}
+                {{#spreadsheet.JB_end-date--fs}}
+                <div class="date__value"> <span class="day">{{end-date}}</span></div><span>/</span><!--date__value-->
+                <div class="date__value"><span class="month">{{end-month}}</span></div><span>/</span><!--date__value-->
+                <div class="date__value"><span class="year">{{end-year}}</span></div><!--date__value-->
+                {{/spreadsheet.JB_end-date--fs}}
+              </div><!--date-->
+            </div><!--date__container-->
+          </div><!--header-->
+          <div class="body">
+            {{#JB_table1Location--fs}}<div class="location" data-max-line="1">{{{JB_table1Location--fs}}}</div>{{/JB_table1Location--fs}}<!--location-->
+            <table class="table">
+              <tr class="table__row">
+                <td class="table__title" colspan="3">departure time</td><!--table__title-->
+                <td class="table__title">arrival time</td><!--table__title-->
+                <td class="note" rowspan="3">notes</td><!--note-->
+              </tr><!--table__row-->
+              {{#spreadsheet.JB_table__headings--fs}}
+              <tr class="table__row">
+                <td class="table__heading"><div data-max-height="22">{{departure-location}}</div></td><!--table__heading-->
+                <td class="table__heading" colspan="2"><div data-max-height="22">{{stops-1-and-2-city}}</div></td><!--table__heading-->
+                <td class="table__heading" rowspan="2"><div data-max-height="22">{{stop-3-city}}</div></td><!--table__heading-->
+              </tr><!--table__row-->
+              <tr class="table__row">
+                <td class="table__heading"><div data-max-height="22">{{stop-1}}</div></td><!--table__heading-->
+                <td class="table__heading"><div data-max-height="22">{{stop-2}}</div></td><!--table__heading-->
+                <td class="table__heading"><div data-max-height="22">{{stop-3}}</div></td><!--table__heading-->
+              </tr><!--table__row-->
+              {{/spreadsheet.JB_table__headings--fs}}
+              {{#spreadsheet.JB_to-table--fs}}
+              <tr class="table__row">
+                <td class="table__cell"><div data-max-height="15">{{departure-location}}</div></td><!--table__cell-->
+                <td class="table__cell"><div data-max-height="15">{{stop-1}}</div></td><!--table__cell-->
+                <td class="table__cell"><div data-max-height="15">{{stop-2}}</div></td><!--table__cell-->
+                <td class="table__cell"><div data-max-height="15">{{stop-3-city}}</div></td><!--table__cell-->
+                <td class="table__cell--alt"><div data-max-height="15">{{notes}}</div></td><!--table__cell-->
+              </tr><!--table__row-->
+              {{/spreadsheet.JB_to-table--fs}}
+            </table><!--table-->
+            {{#JB_table2Location--fs}}<div class="location" data-max-line="1">{{{JB_table2Location--fs}}}</div><!--location-->{{/JB_table2Location--fs}}
+            <table class="table tableFrom">
+              <tr class="table__row">
+                <td class="table__title" colspan="3">departure time</td><!--table__title-->
+                <td class="table__title">arrival time</td><!--table__title-->
+                <td class="note" rowspan="3">notes</td><!--note-->
+              </tr><!--table__row-->
+              {{#spreadsheet.JB_table__headings--fs}}
+              <tr class="table__row">
+                <td class="table__heading" rowspan="2"><div data-max-height="22">{{stop-3-city}}</div></td><!--table__heading-->
+                <td class="table__heading" colspan="2"><div data-max-height="22">{{stops-1-and-2-city}}</div></td><!--table__heading-->
+                <td class="table__heading"><div data-max-height="22">{{departure-location}}</div></td><!--table__heading-->
+              </tr><!--table__row-->
+              <tr class="table__row">
+                <td class="table__heading"><div data-max-height="22">{{stop-2}}</div></td><!--table__heading-->
+                <td class="table__heading"><div data-max-height="22">{{stop-3}}</div></td><!--table__heading-->
+                <td class="table__heading"><div data-max-height="22">{{stop-1}}</div></td><!--table__heading-->
+              </tr><!--table__row-->
+              {{/spreadsheet.JB_table__headings--fs}}
+              {{#spreadsheet.JB_from-table--fs}}
+              <tr class="table__row">
+                <td class="table__cell"><div data-max-height="15">{{departure-location}}</div></td><!--table__cell-->
+                <td class="table__cell light"><div data-max-height="15">{{stop-1}}</div></td><!--table__cell-->
+                <td class="table__cell light"><div data-max-height="15">{{stop-2}}</div></td><!--table__cell-->
+                <td class="table__cell light"><div data-max-height="15">{{stop-3-city}}</div></td><!--table__cell-->
+                <td class="table__cell--alt light"><div data-max-height="15">{{notes}}</div></td><!--table__cell-->
+              </tr><!--table__row-->
+              {{/spreadsheet.JB_from-table--fs}}
+            </table><!--table-->
+          </div><!--body-->
+          <div class="footer">
+            <div class="copy" data-max-height="110">{{{JB_footer-copy--fs}}}</div><!--copy-->
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+      {{ #placeholder-toggle-new }}document.body.classList.add("u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}}"); {{ /placeholder-toggle-new }}
+      {{ #placeholder-validation }}document.body.classList.add("placeholder__validation--{{placeholder-validation}}"){{ /placeholder-validation }}
+    </script>
+    <script>
+
+      console.clear();
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+
+      // Table cell content check
+      /*function contentCheck() {
+        const cells = document.querySelectorAll('.table__cell');
+        cells.forEach( cell => {
+          const cellContent = cell.innerText;
+          cell.classList.remove('overflow');
+          cell.classList.remove('cellContent');
+
+          if(isNaN(cellContent)) { cell.classList.add('cellContent'); cell.classList.add('overflow')}
+          if(cellContent.length>4) { cell.classList.add('overflow') }
+        })
+      }
+
+      contentCheck();*/
+
+      dateValidation();
+      function dateValidation(){
+        let dates = document.querySelectorAll(".date");
+        dates.forEach(function(date){
+          let day = document.querySelector(".day");
+          let month = document.querySelector(".month");
+          let year = document.querySelector(".year");
+
+          if(!validateMonth(month.innerText)){
+            month.classList.add("overflow");
+          }
+
+          if(!validateYear(year.innerText)){
+            year.classList.add("overflow");
+          }
+
+          if(!validateDay(day.innerText, month.innerText, year.innerText)){
+          day.classList.add("overflow");
+                                                                          }
+
+        });
+      }
+
+      function validateMonth(month){
+        if(isNaN(month) || parseInt(month) < 1 || parseInt(month) > 12){
+          return false;
+        }
+
+        return true;
+      }
+
+      function validateYear(year){
+        let yearLength = year.split().length;
+
+        if(isNaN(year) || !(yearLength != 4 || yearLength != 2)){
+          return false;
+        }
+
+        return true;
+      }
+
+      function validateDay(day, month, year){
+        if(isNaN(day) || parseInt(day) < 1 || parseInt(day) > 31){
+          return false;
+        }
+
+        month = parseInt(month);
+        day = parseInt(day);
+        year = parseInt(year);
+        if(month == 4 || month == 6 || month == 9 || month == 11){
+          if(day <= 30){
+            return true;
+          }
+        } else if(month == 2){
+          if(year % 4 == 0 || (year % 100 == 0 && year % 400 == 0)){
+            if(day <= 29){
+              return true;
+            }
+          } else if(day <= 28){
+            return true;
+          }
+        } else{
+          if(day <= 31){
+            return true;
+          }
+        }
+
+        return false;
+      }
+
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+
+    </script>
+
+
+  </body>
+</html>
