@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html data-sign="OSB">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+    <!--{{backgroundImage}}
+    {{JB_featureColor}} 
+    {{JB_heading--vm}}
+    {{JB_heading2--vm}}
+    {{JB_logo--vm}}-->
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css');
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Freeland/stylesheet.css');
+
+      :root {
+        --primary: #c70927;
+        --secondary: #000;
+      }
+      
+      .mainColor--cw-green {
+        --dynamic-color: {{{account.colors.cw-green}}};
+      }
+      .mainColor--cw-blue {
+        --dynamic-color: {{{account.colors.cw-blue}}};
+      }
+      .mainColor--rex {
+        --dynamic-color: {{{account.colors.rex}}};
+      }
+      .mainColor--gsr-green {
+        --dynamic-color: {{{account.colors.gsr-green}}};
+      }
+      .mainColor--gsr-blue {
+        --dynamic-color: {{{account.colors.gsr-blue}}};
+      }
+      .mainColor--gsr-red {
+        --dynamic-color: {{{account.colors.gsr-red}}};
+      }
+      .mainColor--bronze {
+        --dynamic-color: {{{account.colors.jb-bronze}}};
+      }
+      .mainColor--jb-green {
+        --dynamic-color: {{{account.colors.jb-green}}};
+      }
+      .mainColor--jb-grey {
+        --dynamic-color: {{{account.colors.jb-grey}}};
+      }
+      
+      
+
+      html {
+        font-family: "Styrene A";   
+        font-size: 6pt;
+        color: var(--secondary);
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;   
+        width: 100%;
+        height: 100%;
+      }     
+
+      .page {
+        background: #fff;
+      }  
+
+      .page--green {
+        background: {{{account.colors.cw-green}}};
+      }  
+
+      .fit {
+        display: flex;
+        flex-direction: column;
+        padding: 0.744rem 1.649rem 2.7rem;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        bottom: 0rem;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+      }
+      
+      /*.mainColor--cw-green 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86505/Portrait%2520CW-Green.svg) center no-repeat;		}
+      .mainColor--cw-blue 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86507/Portrait%2520CW-Blue.svg) center no-repeat;		}
+      .mainColor--rex 		.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86509/Portrait%2520CW-Rex.svg) center no-repeat;		}
+      .mainColor--gsr-green .backgroundImage{	background: url(https://files.outfit.io/media_library_items/86503/Portrait%2520GSR-Green.svg) center no-repeat;		}
+      .mainColor--gsr-blue 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86511/Portrait%2520GSR-Blue.svg) center no-repeat;		}
+      .mainColor--gsr-red 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86508/Portrait%2520GSR-Red.svg) center no-repeat;		}
+      .mainColor--bronze 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86510/Portrait%2520GSR-Bronze.svg) center no-repeat;	}
+      .mainColor--jb-green 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86506/Portrait%2520JB-Green.svg) center no-repeat;		}
+      .mainColor--jb-grey 	.backgroundImage{	background: url(https://files.outfit.io/media_library_items/86504/Portrait%2520JB-Grey.svg) center no-repeat;		}*/
+
+      /*.landscape .backgroundImage {
+        bottom: 0;
+        height: 4.1rem;
+        background: url(https://files.outfit.io/media_library_items/83294/Bottom%2520Bar%2520A2.svg) center no-repeat;
+        background-size: contain;
+      }*/
+      
+      /*.landscape .mainColor--cw-green .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86515/Landscape%2520CW-Green.svg) center no-repeat;		}
+      .landscape .mainColor--cw-blue .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86514/Landscape%2520CW-Blue.svg) center no-repeat;		}
+      .landscape .mainColor--rex .backgroundImage		{	background: url(https://files.outfit.io/media_library_items/86520/Landscape%2520CW-Rex.svg) center no-repeat;		}
+      .landscape .mainColor--gsr-green .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86522/Landscape%2520GSR-Green.svg) center no-repeat;	}
+      .landscape .mainColor--gsr-blue .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86521/Landscape%2520GSR-Blue.svg) center no-repeat;		}
+      .landscape .mainColor--gsr-red .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86517/Landscape%2520GSR-Red.svg) center no-repeat;		}
+      .landscape .mainColor--bronze .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86516/Landscape%2520JB-Bronze.svg) center no-repeat;	}
+      .landscape .mainColor--jb-green .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86518/Landscape%2520JB-Green.svg) center no-repeat;		}
+      .landscape .mainColor--jb-grey .backgroundImage	{	background: url(https://files.outfit.io/media_library_items/86519/Landscape%2520JB-Grey.svg) center no-repeat;		}*/
+      
+      
+      
+      
+      /*.background-shape-portrait{
+        position: absolute;
+        bottom: 0.4rem;
+        left: 0;
+        right: 0;
+        height: 3.1rem;
+      }
+      
+      .background-shape-portrait svg{
+        width: 100%;
+      }
+      
+      .landscape .background-shape-portrait{
+        display: none;
+      }
+      
+      .portrait .background-shape-landscape{
+        display: none;
+      }*/
+
+      .header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        height: 1.5rem;
+        margin-bottom: 0.615rem;
+        letter-spacing: 0.01rem;
+      }
+
+      .landscape .header {
+        justify-content: center;
+        height: 1.58rem;
+        margin-bottom: 0.08rem;
+        padding: 0 1rem;
+        margin-top: 0.42rem;
+      }
+
+      .heading {
+        width: 11rem;
+        padding-left: 0.026rem;
+        font-size: 0.615rem;
+        line-height: 2em;
+        font-weight: 900;
+        color: var(--dynamic-color);
+      }     
+
+      .landscape .heading {
+        width: auto;
+        margin-right: 0.35rem;
+        font-size: 0.95rem;
+        line-height: 2rem;
+      }
+
+      .heading--fullWidth {
+        width: 100%;
+      }
+
+      .image {
+        max-width: 3.957rem;
+        max-height: 1.058rem;
+      }
+
+      .landscape .image {
+        max-width: 5.3rem;
+        max-height: 1.4rem;
+      }
+
+      .body {
+        /*flex: 1;*/
+        max-height: 14.6rem;
+      }
+
+      .landscape .body {
+        display: flex;
+      }
+      
+      .landscape.a2 .body{
+        max-height: 989px;
+    width: 95%;
+      }
+      
+      .landscape.a3 .body{
+        max-height: 10.5em;
+      }
+      
+      .landscape.a4 .body{
+        max-height: 9.5em;
+      }
+
+      .menu__container {
+        /*max-height: 80%;*/
+        /*overflow: hidden;*/
+      }
+
+      .landscape .menu__container {
+        -webkit-column-count: 2; /* Chrome, Safari, Opera */
+        -moz-column-count: 2; /* Firefox */
+        column-count: 2;
+        -webkit-column-gap: 64pt; /* Chrome, Safari, Opera */
+        -moz-column-gap: 64pt; /* Firefox */
+        column-gap: 64pt;
+      }
+
+      .menu {
+        margin-bottom: 0.043rem;        
+        break-inside: avoid;
+      }
+
+      .landscape .menu {
+        margin-bottom: 0.1rem;
+      }
+
+      .menu__heading,
+      .menu__item {
+        height: 0.462rem;
+        padding-left: 0.051rem;
+      }
+
+      .landscape .menu__heading,
+      .landscape .menu__item { 
+        height: 0.515rem;
+      }
+
+      .menu__heading {
+        padding-right: 0.051rem;
+        font-size: 0.304rem;
+        font-weight: bold;
+        color: var(--dynamic-color);
+        text-transform: uppercase;
+        border-bottom: 1pt solid var(--dynamic-color);
+      }
+
+      .menu__item {
+        display: flex;
+        align-items: center;
+        font-size: 0.202rem;
+        border-bottom: 1pt solid {{{account.colors.jb-grey}}};
+      }
+
+      .landscape .menu__item {
+        font-size: 0.21rem;
+      }
+
+      .menu__cell {
+        display: flex;
+        height: 100%;
+        align-items: center;
+      }
+
+      .menu__cell--label {
+        flex: 1;
+      }
+
+      .menu__cell--label span {
+        font-style: italic;
+      }
+
+      .menu__cell--value {
+        justify-content: center;
+        width: 2.684rem;
+        border-left: 1pt solid {{{account.colors.jb-grey}}};
+      }
+
+      .landscape .menu__cell--value {
+        width: 1.72rem;
+      }
+
+      .logo__container {
+        position: absolute;
+        right: 0.718rem;
+        bottom: 0.573rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 1.590rem;
+        width: 3.171rem;
+        z-index: 1;
+      }
+
+      .landscape .logo__container {
+        bottom: 0.62rem;
+        right: 0.818rem;
+        width: 3.571rem;
+        height: 1.69rem;
+      }
+
+      .logo {
+        max-height: 100%;
+        max-width: 3.171rem;
+      }
+
+      .landscape .logo {
+        max-width: 3.571rem;
+      }
+      
+      .secondaryFont{
+        font-family: 'Freeland';
+        font-size: 1.22rem;
+      }
+      
+      .landscape .secondaryFont{
+        font-size: 1.34rem;
+      }
+      
+      .showSwoosh--show{
+        display: block;
+      }
+      
+      .showSwoosh--hide{
+        display: none;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} {{{JB_page-orientation--vm}}} {{{page-size}}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="page mainColor--{{{JB_featureColor}}}" id="page">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="backgroundImage"><div class="reposition-fix">{{{backgroundImage}}}</div></div> <!--showSwoosh--{{{showSwoosh}}}-->
+          <!--<div class="background-shape-portrait"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="1722.24px" height="369.048px" viewBox="0 0 1722.24 369.048" enable-background="new 0 0 1722.24 369.048"
+             xml:space="preserve">
+      		<path fill="#c70927" d="M0,369.048h1722.24V117.666c-97.189-70.164-318.534-185.629-621.063-65.481
+          	c-121.717,48.339-234.623,82.068-333.465,105.6c-259.777,61.848-515.638,24.213-766.345-67.74L0,369.048z"/>
+      		</svg>
+          </div>-->
+          <div class="header">
+            <div class="heading heading--fullWidth" data-max-line="1"> {{{JB_heading--vm}}} <span class="secondaryFont">{{{JB_heading2--vm}}}</span></div> <!-- heading --> 
+          </div> <!-- header -->
+          <div class="body" id="body" data-max-height="css"> 
+            <div class="menu__container" id="menu__container"> <!-- data-max-height="dynamic"-->
+              {{#collection.JB_menu--vm}}
+              {{#block.JB_menu-item--vm}}
+              <div class="menu">
+                <div class="menu__heading"> <div data-max-line="1"> {{{JB_section-heading--vm}}} </div><!--data-max-line--> </div> <!-- menu__heading -->
+                {{#spreadsheet.JB_content--vm}}
+                <div class="menu__item"> 
+                  <div class="menu__cell menu__cell--label"> 
+                    <div data-max-line="1"> 
+                      {{{JB_menu-item--vm}}} <span class="menu"> {{{JB_supporting-text--vm}}} </span> 
+                    </div><!--data-max-line-->
+                  </div> <!-- menu__label -->
+                  <div class="menu__cell menu__cell--value" data-char-limit="10"> ${{{JB_price--vm}}} </div> <!-- menu__value -->
+                </div> <!-- menu__item -->
+                {{/spreadsheet.JB_content--vm}}
+              </div> <!-- menu -->
+              {{/block.JB_menu-item--vm}}
+              {{/collection.JB_menu--vm}}
+              <span id="myColumnMarker"></span> <!--helper-->
+            </div> <!-- menu__container -->     
+          </div> <!-- body -->  
+          <div class="logo__container"> <img src="{{{JB_logo--vm}}}" class="logo"/></div> <!-- footer -->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script>
+      
+      function menuOverflowHelper(){
+          var menuContainerWidth = document.getElementById('menu__container').offsetWidth;
+          var markerPos = document.getElementById('myColumnMarker').offsetLeft;
+        var body = document.getElementById('menu__container');
+          if(markerPos >= menuContainerWidth){
+            console.log("overflow");
+            body.classList.add('overflow');
+            
+          } else{
+            console.log("not overflow");
+            body.classList.remove('overflow');
+          }
+      }
+      menuOverflowHelper();
+      
+      
+      
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+      });
+
+      function detectSystem() {
+        const isMac = window.navigator.appVersion.includes('Mac');
+        if ( isMac ) document.body.classList.add('is-mac');
+      }
+
+      detectSystem();  
+
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+    </script>
+
+
+  </body>
+</html>
