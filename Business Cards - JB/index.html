@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html data-sign="OSS" async>
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="main-ext.css">
+
+    <style>
+      @import url(https://outfit-assets-production.s3.amazonaws.com/fonts/StyreneA/stylesheet.css);
+      @import url(https://outfit-assets-production.s3.amazonaws.com/fonts/Berthold%20AkzidenzGrot/stylesheet.css);
+      @import url(https://outfit-assets-production.s3.amazonaws.com/fonts/brandon-grotesque/stylesheet.css);
+
+      html {
+        font-family: 'Brandon Grotesque';
+        font-size: 11pt;
+        color: #000;
+        word-break: break-word;
+      }
+
+      /* Placeholder Styling */
+      .placeholder__container {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.4;
+        transition: 0.3s all;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url({{{ placeholder-image }}}); 
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;   
+        opacity: 0.4;
+      }
+
+      .u-placeholder-locked .placeholder__container {
+        opacity: 1;  
+      }
+
+      .u-placeholder-hidden .placeholder__container,
+      .u-placeholder-hidden .placeholder__trigger {
+        display: none;
+      }
+
+      .placeholder__trigger {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 1rem;
+        height: 1rem;
+        border-bottom-left-radius: 1rem;
+        background: #467BE3;
+        transition: all 0.3s;
+        transform: translate(30%, -30%);
+        opacity: .4;
+        z-index: 9999;
+      }   
+
+      .bleed:hover .placeholder__trigger:hover {
+        cursor: pointer;
+        opacity: 1;        
+      }
+
+      .placeholder__trigger svg {
+        width: 50%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-25%, -50%);
+      }
+
+      .bleed:hover .placeholder__trigger {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }      
+
+      .bleed:hover .placeholder__trigger:hover + .placeholder__container {
+        opacity: 1;
+      }      
+
+      .placeholderBtn__container {
+        position: absolute;
+        top: 0;
+        left: -0.6rem;
+        bottom: -0.6rem;
+        right: 0;
+        transition: 0.3s all;
+        transform: rotate(-90deg);
+        transform-origin: top right;
+        opacity: 0;
+      }
+
+      .placeholder__trigger:hover .placeholderBtn__container {
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      .placeholderBtn {
+        position: absolute;
+        left: 0;
+        top: 0.04rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: #467BE3;
+        color: #fff;
+        font-size: 0.27rem;
+        text-decoration: none;
+        line-height: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }     
+
+      .placeholderBtn--plus::before {
+        content: '+';
+      }            
+
+      .placeholderBtn--minus {
+        top: 0.68rem;
+        left: 0.4rem;       
+      }    
+
+      .placeholderBtn--minus::before {
+        content: '-';        
+      }
+
+      .placeholderBtn--lock {
+        bottom: 0;
+        top: auto;
+        right: 0.04rem;
+        left: auto;
+      }
+
+      .placeholderBtn--lock::before {
+        content: 'L';
+      }
+
+      .u-placeholder-locked .placeholderBtn--lock::before {
+        content: 'U';
+      }      
+
+      /* End Placeholder Styling */
+
+      /** Overflow Styles **/
+      .overflow {
+        position: relative !important;
+        border: 1px dashed red;
+        color: red !important;
+      }
+
+      .overflow * { 
+        color: inherit !important; 
+      }
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative;
+        z-index: 999;}
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0;
+        right: 0;
+        height: 1em;
+        width: 1em;
+        max-height: 100%;
+        color: red;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 0.8em;
+        text-align: center;
+        line-height: 1em;
+        background-color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'Max number of lines exceeded!';
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: black;
+        color: white;
+        border-radius: 0;
+        padding: 0 1.5em 0 0.5em;
+        box-sizing: border-box;
+        max-height: 100%;
+        font-size: 0.8em;
+        font-weight: 400;
+        text-align: right;
+        line-height: 1em;
+        z-index: 2;
+      }
+
+      .overflow[data-max-height]:hover:after {
+        content: 'Max height exceeded!';  
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }
+
+      .overflow .token-value.token-empty {
+        display: none;
+      }
+
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }    
+
+      .fit {
+        background-size: cover;
+      }
+
+      /* Page 1 */
+
+      .container--front {
+        padding: 20px 0;
+        background-size: cover;
+      }
+
+      .logo {
+        max-height: {{{ CWSbcc_logo-scaling-input }}}%; 
+        width: {{{ CWSbcc_logo-scaling-input }}}%; 
+        max-width: 90%;
+      }
+
+      .logo--top {
+        align-self: flex-start;
+      }
+
+      .logo--bottom {
+        align-self: flex-end;
+      }      
+
+      .logo__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;        
+      }
+
+
+      /** Page 2 **/
+      .container__inner {
+        padding: 40.7px 51px 21px;
+        background: #fff;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: {{{account.colors.jb-grey}}};
+      }
+
+      .logo--back {
+        margin-bottom: 13px;
+        width: 185px;
+        height: 37px;
+        object-fit: contain;
+        object-position: left bottom;
+      }
+
+      .header {
+        margin-bottom: 3px;
+        font-size: 9.1px;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        word-spacing: -1.5px;
+      }
+
+      .subheader {
+        margin-bottom: 5.1px;
+        font-size: 7.9pt;
+        line-height: 1em;
+      }
+
+      .info__container {
+        margin-bottom: 10px;
+        font-size: 9.36px;
+        letter-spacing: 0.4pt;
+      }
+
+      .info {
+        display: flex;
+        align-items: center;
+        margin-left: -11px;
+        line-height: 1.4em;
+        letter-spacing: 0.5px;
+      }
+
+      .info:nth-child(2) {
+        font-size: 10.21px;
+        letter-spacing: 0.1px;
+      }
+
+      .info:nth-child(3) {
+        letter-spacing: 0.62px;
+      }
+
+      .info:nth-child(4) {
+        letter-spacing: 0.6px;
+      }
+
+      .info__text {
+        margin-left: 11px;
+      }
+
+      .info__text--bold { font-weight: bold;}
+
+      .info__icon {
+        margin-right: 5.5px;  
+        width: 13px;
+        height: 13px;
+      }
+
+      .website {
+        position: relative;
+        text-transform: uppercase;
+        font-size: 9px;
+        color: {{{account.colors.jb-grey}}};
+        margin-bottom: 14px;
+        letter-spacing: 0.16em;         
+      }
+
+      .footer {
+        font-size: 7.9px;
+        text-transform: uppercase;
+        color: #8CC63F;
+        letter-spacing: 0.7px;
+      }
+
+      .bgImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: 0;
+        overflow: hidden;
+      }
+
+      .bgImage__container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: 0;
+      } 
+
+      .logoInfo {
+        display: none;
+      }
+
+      .u-hide { display: none; }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="{{ placeholder-toggle }}" data-crop="{{show-crop}}">  
+    <div class="bgImage__container">
+      {{#collection.JBbcc_card-background}}
+      <div class="bgImage" data-logo-align="{{JBcc_logo-align}}">{{{JBbcc_background-image}}}</div>
+      {{/collection.JBbcc_card-background}}
+    </div>
+    <div class="logoInfo" data-logo="{{ JBbcc_logo }}"></div>
+    <div class="js-back-logo-src u-hide">{{ JBcc_logo-back }}</div>
+    <div class="js-website-src u-hide">{{ JBbcj_website }}</div>    
+    {{#spreadsheet.JBbcj_business-cards}}
+    <div class="card__group">
+      <div class="card__container">
+        <!-- Page 1 -->
+        <div class="page">
+
+          <div class="bleed center-children">
+
+            <span class="placeholder__trigger">   
+              <div class="placeholderBtn__container">
+                <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+                <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+                <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+              </div>
+              <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <title>background</title>
+                  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+                </g>
+                <g>
+                  <title>Layer 1</title>
+                  <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+                </g>
+              </svg>
+            </span><!-- end placeholder__trigger -->
+            <div class="placeholder__container">
+              <div class="placeholder"></div>
+            </div><!-- end placeholder__container -->
+
+            <div class="container container--front fit logo__container js-dynamic-bg">
+              <div class="backgroundImage"></div>
+              <img src="/" class="logo logo--front" />
+            </div><!--container fit backgroundImage backgroundImage--1 -->
+
+          </div><!--bleed-->
+        </div><!-- end Page 1 -->
+
+
+        <!-- Page 2 -->
+        <div class="page">
+
+          <div class="bleed center-children">
+
+            <span class="placeholder__trigger">   
+              <div class="placeholderBtn__container">
+                <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+                <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+                <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+              </div>
+              <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <title>background</title>
+                  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+                </g>
+                <g>
+                  <title>Layer 1</title>
+                  <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+                </g>
+              </svg>
+            </span><!-- end placeholder__trigger -->
+            <div class="placeholder__container">
+              <div class="placeholder"></div>
+            </div><!-- end placeholder__container -->
+
+            <div class="container container--back fit js-dynamic-bg">
+              <div class="container__inner">
+                <div class="container__section">
+                  <img src="https://outfit-v2-exports-production.s3-accelerate.amazonaws.com/media_library_items/3a686836389a09bd301d40bbd386d69b/JB_Grey_Dotted_POS_tightcrop.png" class="logo--back js-back-logo-target" /> 
+                  <div class="header">{{#JBbcj_first-name}} {{{JBbcj_first-name}}} {{/JBbcj_first-name}}  {{#JBbcj_last-name}} {{{JBbcj_last-name}}}{{/JBbcj_last-name}} </div><!-- end header -->
+                  {{#JBbcj_title}}<div class="subheader">{{{JBbcj_title}}}</div><!-- end subheader -->{{/JBbcj_title}} 
+
+                  <ul class="info__container">
+                    <li class="info">
+                      {{#JBbcj_location}} <div class="info__text">{{{JBbcj_location}}}</div>{{/JBbcj_location}} 
+                    </li>
+                    <li class="info">
+                      {{#JBbcj_mobile-phone}} <div class="info__text"><span class="info__text--bold">M: </span> {{{JBbcj_mobile-phone}}}</div>{{/JBbcj_mobile-phone}}  {{#JBbcj_office-phone}} <div class="info__text"><span class="info__text--bold">T</span>: {{{JBbcj_office-phone}}}</div>{{/JBbcj_office-phone}} 
+                    </li>
+                    <li class="info">
+                      {{#JBbcj_email}} <div class="info__text"><span class="info__text--bold">E:</span>&nbsp;&nbsp;{{{JBbcj_email}}}</div>{{/JBbcj_email}} 
+                    </li>
+                  </ul><!-- end info__container -->
+                </div><!-- end container__inner -->
+                <div class="container__section">
+                  <div class="website js-website-target" data-max-line="1"></div> <!-- website -->
+                </div><!-- end container__section -->
+              </div><!-- end container__inner -->
+            </div><!--container fit-->
+
+          </div><!--bleed-->
+        </div><!--page 2-->
+      </div><!-- end card__container -->
+    </div> <!-- end card__group -->
+    {{/spreadsheet.JBbcj_business-cards}}
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main.js"></script>   
+    <script src="prefixfree.js"></script>
+    <script src="placeholder-controller.js"></script>
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>
+    <script src="check-height.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script>
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 1000);  
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+      placeholderControler();             
+      checkCrop();  
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });      
+
+      function cardBgController() {
+        const images = document.querySelectorAll('.bgImage');
+        const cardContainers = document.querySelectorAll('.card__container');
+
+        function insertAfter(el, referenceNode) {
+          referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+        }
+
+        images.forEach((image, index) => {
+          if ( index < images.length - 1 ) {
+            cardContainers.forEach( container => {
+              let containerClone = container.cloneNode();
+              insertAfter(containerClone, container);
+              containerClone.innerHTML = container.innerHTML;
+            });
+          }
+        });
+
+        const groups = document.querySelectorAll('.card__group');
+
+        logoController();
+
+        groups.forEach(group => {
+          let containers = group.querySelectorAll('.card__container');
+          containers.forEach((container, index) => {
+            const bgContainers = container.querySelectorAll('.js-dynamic-bg');
+
+            bgContainers.forEach(bgContainer => {
+              const logo = bgContainer.querySelector('.logo');
+              let logoAlignment = (images[index].dataset.logoAlign !== '') ? images[index].dataset.logoAlign : 'logo--middle';
+              if ( logo !== null ) {
+                logo.classList.add(logoAlignment); 
+              }
+
+              if ( bgContainer.querySelector('.backgroundImage') !== null ) {
+                bgContainer.querySelector('.backgroundImage').innerHTML = images[index].innerHTML;
+              }
+            })              
+          });
+        });             
+      } 
+
+      function logoController() {
+        const logoPath = document.querySelector('.logoInfo').dataset.logo;
+        const logos = document.querySelectorAll('.logo');
+
+        logos.forEach(logo => {
+          logo.src = logoPath;
+        });
+      }
+
+      function backLogoInject() {
+        const src = document.querySelector('.js-back-logo-src').innerText;
+        const targets = document.querySelectorAll('.js-back-logo-target');
+
+        targets.forEach(target => target.src = src);
+      }
+
+      function websiteInject() {
+        const src = document.querySelector('.js-website-src').innerText;
+        const targets = document.querySelectorAll('.js-website-target');
+
+        targets.forEach(target => target.innerText = src);
+      }
+
+      backLogoInject();
+      websiteInject();        
+      cardBgController();
+
+      setInterval(() => {
+        websiteInject();        
+      }, 1000);
+
+    </script>
+
+    <script type="text/javascript">
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 500);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>    
+
+  </body>
+</html>
