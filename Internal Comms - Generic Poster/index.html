@@ -1,0 +1,652 @@
+<!DOCTYPE html async>
+<html data-sign="OSS">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="minireset.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="main-ext.css">
+    <link rel="stylesheet" type="text/css" href="https://outfit-assets-production.s3.amazonaws.com/fonts/Calibri-Full/stylesheet.css">
+
+
+    <style>
+
+      :root {
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.cw-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+        --white: #FFF;
+      }
+
+      .backgroundColour--cw-green {
+        --dynamic-colour: var(--cw-green);
+      }
+
+      .backgroundColour--cw-blue {
+        --dynamic-colour: var(--cw-blue);
+      }
+
+      .backgroundColour--rex {
+        --dynamic-colour: var(--rex);
+      }
+
+      .backgroundColour--gsr-green {
+        --dynamic-colour: var(--gsr-green);
+      }
+
+      .backgroundColour--gsr-blue {
+        --dynamic-colour: var(--gsr-blue);
+      }
+
+      .backgroundColour--gsr-red {
+        --dynamic-colour: var(--gsr-red);
+      }
+
+      .backgroundColour--jb-bronze {
+        --dynamic-colour: var(--jb-bronze);
+      }
+
+      .backgroundColour--jb-green {
+        --dynamic-colour: var(--jb-green);
+      }
+
+      .backgroundColour--jb-grey {
+        --dynamic-colour: var(--jb-grey);
+      }
+
+      .backgroundColour----white {
+        --dynamic-colour: var(--white);
+      }
+
+      html {
+        font-family: 'Calibri';
+        font-size: 11pt;
+        color: #fff;
+      }
+
+      /* Placeholder Styling */
+      .placeholder__container {
+        position: absolute;
+        top: 3mm;
+        left: 3mm;
+        right: 3mm;
+        bottom: 3mm;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0;
+        transition: 0.3s all;
+      }
+
+      .placeholder {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-image: url({{{ placeholder-image }}}); 
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;   
+        opacity: 0.4;
+      }
+
+      .u-placeholder-locked .placeholder__container {
+        opacity: 1;  
+      }
+
+      .u-placeholder-hidden .placeholder__container,
+      .u-placeholder-hidden .placeholder__trigger {
+        display: none;
+      }
+
+      .placeholder__trigger {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 1rem;
+        height: 1rem;
+        border-bottom-left-radius: 1rem;
+        background: #467BE3;
+        transition: all 0.3s;
+        transform: translate(30%, -30%);
+        opacity: .4;
+        z-index: 9999;
+      }   
+
+      .bleed:hover .placeholder__trigger:hover {
+        cursor: pointer;
+        opacity: 1;        
+      }
+
+      .placeholder__trigger svg {
+        width: 50%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-25%, -50%);
+      }
+
+      .bleed:hover .placeholder__trigger {
+        transform: translate(0, 0);
+        opacity: 0.5;
+      }      
+
+      .bleed:hover .placeholder__trigger:hover + .placeholder__container {
+        opacity: 1;
+      }      
+
+      .placeholderBtn__container {
+        position: absolute;
+        top: 0;
+        left: -0.6rem;
+        bottom: -0.6rem;
+        right: 0;
+        transition: 0.3s all;
+        transform: rotate(-90deg);
+        transform-origin: top right;
+        opacity: 0;
+      }
+
+      .placeholder__trigger:hover .placeholderBtn__container {
+        transform: rotate(0deg);
+        opacity: 1;
+      }
+
+      .placeholderBtn {
+        position: absolute;
+        left: 0;
+        top: 0.04rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: #467BE3;
+        color: #fff;
+        font-size: 0.27rem;
+        text-decoration: none;
+        line-height: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+      }     
+
+      .placeholderBtn--plus::before {
+        content: '+';
+      }            
+
+      .placeholderBtn--minus {
+        top: 0.68rem;
+        left: 0.4rem;       
+      }    
+
+      .placeholderBtn--minus::before {
+        content: '-';        
+      }
+
+      .placeholderBtn--lock {
+        bottom: 0;
+        top: auto;
+        right: 0.04rem;
+        left: auto;
+      }
+
+      .placeholderBtn--lock::before {
+        content: 'L';
+      }
+
+      .u-placeholder-locked .placeholderBtn--lock::before {
+        content: 'U';
+      }      
+
+      /* End Placeholder Styling */
+
+      .overflow {
+        border: none;
+        box-shadow: 0 0 0 0.0362rem red;
+        background: rgba(255, 0, 0, 0.4);
+        position: relative; }
+      .overflow h1, 
+      .overflow h2, 
+      .overflow h3, 
+      .overflow h4, 
+      .overflow h5, 
+      .overflow h6, 
+      .overflow p, 
+      .overflow li { color: red !important; }
+      .overflow::before {
+        content: '+';
+        position: absolute;
+        z-index: 5;
+        top: 0.1rem;
+        right: 0.1rem;
+        height: .3107rem;
+        width: .3107rem;
+        border: 0.01rem solid red;
+        color: red;
+        padding: 0.01rem 0.01rem 0.01rem 0.0155rem;
+        box-sizing: border-box;
+        font-size: 0.2279rem;
+        text-align: center;
+        line-height: .2693rem;
+        background-color: white;
+        text-align: center; }
+      .overflow:hover:before {
+        background-color: red;
+        color: white; }
+      .overflow:after {
+        display: none; }
+      .overflow:hover:after {
+        display: block;
+        content: 'There is overset content in this column. Please remove it';
+        position: absolute;
+        top: 0.5rem;
+        right:  0.1rem;
+        background-color: black;
+        color: white;
+        border-radius: 0.01rem;
+        padding: 0.2rem 0.2rem;        
+        box-sizing: border-box;
+        font-size: 0.35rem;
+        font-weight: 400;     
+        text-align: right;
+        width: 6rem;
+        line-height: 0.45rem;
+      }
+
+      .overflow[data-char-limit]:hover:after {
+        content: 'Character limit exceeded';        
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: none;
+        overflow: hidden;
+      }
+
+      .backgroundImage { display: block; }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }    
+
+      .is-export-mode .placeholder__container,
+      .is-export-mode .placeholder__trigger {
+        display: none;
+      }
+
+      .fit {
+        text-align: center;
+      }
+
+      .container__inner {
+        background: var(--dynamic-colour);
+        position: absolute;
+        top: 54px;
+        bottom: 54px;
+        left: 54px;
+        right: 54px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 14pt 0;  
+      }
+      
+      .backgroundColour--image .container__inner { padding: 72px 54px 54px; }
+
+      .logoContainer {
+        position: relative;
+        width: 98%;
+        margin: 0pt auto 0pt;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logoContainer__img {
+
+      }
+
+      .inner {
+        margin: 37.5px 0;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;  
+        justify-content: center;
+      }
+
+      .contentContainer {
+        display: flex;
+        flex: 1;
+        align-items: center;
+      }
+
+      .contentAlignment--top  .contentContainer {
+        align-items: flex-start;
+      }
+
+      .contentAlignment--bottom .contentContainer {
+        align-items: flex-end;
+      }
+
+      .content {
+        position: relative;
+        width: 100%;
+      }
+
+      .content h1 {
+        font-size: 50.4pt;
+        line-height: 1.18em;
+        font-weight: bold;
+      }
+
+      .content h2 {
+        margin-bottom: 17.5pt;
+        font-size: 20.1pt;
+        font-weight: 300;
+        line-height: 1.3em;
+        letter-spacing: 2.4pt;
+        margin-top: 13pt;
+      }
+
+      .content p {
+        margin-bottom: 8.75pt;
+        font-size: 11.3pt;
+        font-weight: bold;
+        z-index: 1;
+        letter-spacing: 1.4pt;
+      }
+
+      .info__container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
+      .info {
+        display: flex;
+        font-size: 11.3pt;
+        letter-spacing: 1.4pt;
+        text-transform: uppercase;
+        padding: 0 8.4pt 0 11pt;
+        border-right: 1px solid;
+      }
+
+      .info:first-child {
+        padding-left: 0;
+      }
+
+      .info:last-child {
+        padding-right: 0;
+      }      
+
+      .info__label  { 
+        margin-right: 2.2pt;
+        font-weight: bold;
+        z-index: 1;
+      }
+
+      .info__val {
+        letter-spacing: 1pt;
+      }
+
+      .info:last-child {
+        border: none;
+      }
+
+      .footerLogo {
+        position: relative;
+        margin: 0 auto;
+        max-width: 90%;
+        max-height: 92px;	
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="{{ placeholder-toggle }}" data-crop="{{show-crop}}">    
+
+    <!---
+	{{{ JBp_logo }}}
+	{{{ JBp_logo-scaling-input }}}%;
+
+	{{{JBP_background-colour--p}}}
+	{{{ JBp_backgroundImage }}}
+ 
+ 	{{{JBP_content--p}}}
+	{{{JB_content-alignment-p}}}
+
+	--->
+    
+    
+    <div class="page">
+
+      <div class="bleed center-children">
+
+        <span class="placeholder__trigger">   
+          <div class="placeholderBtn__container">
+            <div class="placeholderBtn placeholderBtn--operation placeholderBtn--plus" data-operation="plus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--operation placeholderBtn--minus" data-operation="minus"></div>
+            <div href="#" class="placeholderBtn placeholderBtn--lock"></div>
+          </div>
+          <svg viewBox="0 0 144 100" preserveAspectRatio xmlns="http://www.w3.org/2000/svg">
+            <g>
+              <title>background</title>
+              <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <path fill="#ffffff" id="svg_1" d="m89.668,38.786c0,-10.773 -8.731,-19.512 -19.51,-19.512s-19.512,8.736 -19.512,19.512c0,10.774 8.732,19.511 19.512,19.511c10.776,0 19.51,-8.736 19.51,-19.511m38.684,-0.059c-13.315,17.599 -34.426,28.972 -58.193,28.972c-23.77,0 -44.879,-11.373 -58.194,-28.972c13.314,-17.598 34.424,-28.971 58.193,-28.971c23.769,0 44.878,11.373 58.194,28.971m11.962,0.033c-14.648,-23.282 -40.589,-38.76 -70.156,-38.76s-55.51,15.478 -70.158,38.76c14.648,23.312 40.591,38.81 70.158,38.81s55.508,-15.498 70.156,-38.81"/>
+            </g>
+          </svg>
+        </span><!-- end placeholder__trigger -->
+        <div class="placeholder__container">
+          <div class="placeholder"></div>
+        </div><!-- end placeholder__container -->
+
+        <div class="container fit contentAlignment--{{{JB_content-alignment-p}}}{{^JB_content-alignment-p}}center{{/JB_content-alignment-p}}">
+
+          <div class="container__inner backgroundColour--{{{JBP_background-colour--p}}}{{^JBP_background-colour--p}}jb-green{{/JBP_background-colour--p}} ">
+            <div class="backgroundImage">{{{ JBp_backgroundImage }}}</div> <!-- backgroundImage -->
+            <div class="logoContainer">
+              {{#JBp_logo }}
+              	<img src="{{{ JBp_logo }}}" class="logoContainer__img" alt="Logo" style="max-width: {{{ JBp_logo-scaling-input }}}%; max-height: {{{ JBp_logo-scaling-input }}}%;"/>
+              {{/JBp_logo }} 
+            </div><!--logoContainer-->
+            <div class="contentContainer">
+              <div class="inner" data-max-height="518">
+                {{#JBP_content--p}} 
+                <div class="content">
+                  <div style="max-height: 9em;"> 
+                    <div class="check-overflow">
+                      {{{JBP_content--p}}}
+                    </div>
+                  </div>
+                </div><!-- end content -->
+                {{/JBP_content--p}}
+              </div><!-- end inner -->
+            </div><!--contentContainer-->
+            <div class="logoContainer">
+              <img src="{{{JBp_footer-logo}}}" class="footerLogo" style="max-height: {{{ CWSbcc_logo-scaling-input--fl }}}%; max-width: {{{ CWSbcc_logo-scaling-input--fl }}}%;"/>
+            </div><!--logoContainer-->
+          </div><!-- end container__inner -->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};                                      
+    </script>
+    <script src="main.js"></script>   
+    <script src="prefixfree.js"></script>
+    <!--<script src="placeholder-controller.js"></script>-->
+    <script src="char-limit.js"></script>
+    <script src="check-export-mode.js"></script>
+    <script src="check-height.js"></script>    
+    <script>
+      function loop() {
+        checkHeight(document.getElementsByClassName('check-overflow'));
+      } setInterval(loop, 1000);  
+
+      // Fix for the resizable background images - fullscreen and digital vairaitons only
+      function checkCrop() {
+        if (window.showCrop === true) {
+        } else {
+          [].forEach.call(document.querySelectorAll('.outfit-resizable-background'), function (el) {
+            el.parentNode.style.left = '0';
+            el.parentNode.style.right = '0';
+            el.parentNode.style.top = '0';
+            el.parentNode.style.bottom = '0';
+            el.parentNode.style.width = '100%';
+            el.parentNode.style.height = '100%';
+          });
+        }
+      }
+
+      //placeholderControler();             
+      checkCrop();  
+      //      checkExport(); 
+      //      charLimit();
+
+      function maxLineCheck() {
+        const textBlocks = document.querySelectorAll('[data-max-line]');
+        textBlocks.forEach(block => {
+          const computedStyle = window.getComputedStyle(block);
+          // Checking if line-height is not set and has a normal value set by default
+          // That value is Nan
+          const isNormal = computedStyle.getPropertyValue('line-height') == 'normal';
+          // Getting the font-size of an element that will help us calculate the line-height
+          // if the line-height is set to 'normal'
+          const fontSize = parseFloat(computedStyle.getPropertyValue('font-size'));
+          // If line-height is normal, we multiply the element's font-size with 1.14
+          // otherwise we get the element's line-height
+          const lineHeight = isNormal ? (fontSize * 1.14) : parseFloat(computedStyle.getPropertyValue('line-height'));
+          const blockHeight = block.scrollHeight;
+          // Getting the data-max-line attribute value (max number of lines allowed)
+          const maxLine = block.dataset.maxLine;
+          // Setting the element's max-height 
+          block.style.maxHeight = lineHeight * maxLine + 'px';
+          // Adding an 'overflow' class to an element if it's offset height exceedes the max-line-height
+          if ( blockHeight > (lineHeight * maxLine) + (lineHeight / 2) ) {
+            block.classList.add('overflow');
+          } else {
+            block.classList.remove('overflow');
+          }
+        });
+      }
+
+      function maxHeightCheck() {
+        const textBlocks = document.querySelectorAll('[data-max-height]');
+        textBlocks.forEach(block => {
+          const computedStyle = window.getComputedStyle(block);
+          const blockHeight = block.scrollHeight;
+          // Getting the data-max-line attribute value (max number of lines allowed)
+          const maxHeight = block.dataset.maxHeight;
+          // Setting the element's max-height 
+          block.style.maxHeight = maxHeight + 'px';
+          // Adding an 'overflow' class to an element if it's offset height exceedes the max-line-height
+          if ( blockHeight > maxHeight ) {
+            block.classList.add('overflow');
+          } else {
+            block.classList.remove('overflow');
+          }
+        });
+      }
+
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          checkHeight(document.getElementsByClassName('check-overflow')); 
+          maxLineCheck(); 
+          maxHeightCheck(); 
+        });
+      });    
+
+      const maxLineChecks = document.querySelectorAll('[data-max-line]');
+      const maxHeightChecks = document.querySelectorAll('[data-max-height]');
+      const checkOverflows = document.querySelectorAll('.check-overflow');
+
+      if ( maxLineChecks.length !== 0) {
+        maxLineChecks.forEach(maxLineCheck => {
+          overflowObserver.observe(maxLineCheck, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });
+      }
+
+      if ( maxHeightChecks.length !== 0) {
+        maxHeightChecks.forEach(maxHeightCheck => {
+          overflowObserver.observe(maxHeightCheck, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });
+      }      
+
+      if ( checkOverflows.length !== 0) {      
+        checkOverflows.forEach(checkOverflow => {
+          overflowObserver.observe(checkOverflow, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });        
+        });      
+      }
+
+      maxLineCheck();             
+      //placeholderController();
+      checkCrop();  
+      checkExport(); 
+      charLimit();
+
+    </script>
+    <script type="text/javascript">
+      // Add many fallbacks for Print Ready
+      document.addEventListener('DOMContentLoaded', function(event) {
+        document.dispatchEvent(new Event('printready'));
+      });
+
+      setTimeout(function() {
+        document.dispatchEvent(new Event('printready'));
+      }, 500);
+
+      document.dispatchEvent(new Event('printready'));
+    </script>
+
+  </body>
+</html>
