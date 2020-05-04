@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html data-sign="OSR">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    
+    <style>  
+      
+      /* 
+      {{show-crop}}
+      {{JB_copy-primary--yc}}
+      {{spreadsheet.content--yc}}
+      {{orgName}}
+      {{JB_copy-secondary--yc}}
+      {{JB_copy-tertiary--yc}}
+      {{JB_logo--yc}}
+      */
+      
+      :root {
+        --grey: {{{account.colors.jb-grey}}};
+      }
+
+      html {
+        font-family: "Arial";
+        font-size: 11pt;
+        color: var(--grey);
+        word-break: break-word;
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+      }
+
+      .backgroundImage div {
+        width: auto !important;
+        height: auto !important;
+        right: 0;
+        bottom: 0;
+      }      
+
+      /* Helper classes */
+      .u-hide { display: none; }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      }
+
+      .reposition-fix div {
+        top: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      .fit {
+        display: flex;
+      }
+
+      .side {
+        position: relative;
+        width: 179pt;
+      }
+
+      .featureImage {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-image: url(https://files.outfit.io/media_library_items/83002/background%2520joinners%2520dinner%2520menu%25202.jpg);
+      }
+
+      .main {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 45pt 41pt 61pt 44pt;
+      }
+
+      .header {
+        position: relative;
+      }
+
+      .image {
+        width: 166pt;
+        height: 138pt;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-image: url(https://files.outfit.io/media_library_items/116906/00125JB%2520Years%2520of%2520Service_icon-5%2520years.png);
+        color: transparent;
+      }
+
+      .yearsOfService--5 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116906/00125JB%2520Years%2520of%2520Service_icon-5%2520years.png);
+        background-position: -18px 0;
+      }
+
+      .yearsOfService--10 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116905/00125JB%2520Years%2520of%2520Service_icon-10%2520years.png);
+        background-position: -8px 0;
+      }
+
+      .yearsOfService--15 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116908/00125JB%2520Years%2520of%2520Service_icon-15%2520years.png);
+        background-position: -8px 0;
+      }
+
+      .yearsOfService--20 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116910/00125JB%2520Years%2520of%2520Service_icon-20%2520years.png);
+        background-position: -5px 0;
+      }
+
+      .yearsOfService--25 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116907/00125JB%2520Years%2520of%2520Service_icon-25%2520years.png);
+        background-position: -5px 0;
+      }
+
+      .yearsOfService--30 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116911/00125JB%2520Years%2520of%2520Service_icon-30%2520years.png);
+        background-position: -5px 0;
+      }
+
+      .yearsOfService--35 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116909/00125JB%2520Years%2520of%2520Service_icon-35%2520years.png);
+        background-position: -5px 0;
+      }
+
+      .yearsOfService--40 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116912/00125JB%2520Years%2520of%2520Service_icon-40%2520years.png);
+        background-position: -2px 0;
+      }
+
+      .yearsOfService--45 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116913/00125JB%2520Years%2520of%2520Service_icon-45%2520years.png);
+        background-position: -3px 0;
+      }
+
+      .yearsOfService--50 .image {
+        background-image: url(https://files.outfit.io/media_library_items/116914/00125JB%2520Years%2520of%2520Service_icon-50%2520years.png);
+        background-position: -5px 0;
+      }
+
+      .body {
+        flex: 1;
+        padding: 107pt 0 15pt 0;
+      }
+
+      .body__section {
+        display: flex;  
+      }
+
+      .body__section--primary {
+        flex-direction: column;
+     /*   margin-bottom: 90pt;*/
+      }
+
+      .copy {
+        text-transform: uppercase;
+      }
+
+      .copy--primary {
+        margin-bottom: 42pt;
+        font-size: 24.6pt;
+        line-height: 1.2em;
+      }
+
+      .name {
+        margin-bottom: 43pt;
+        max-width: 90%;
+        font-size: 0pt;
+        font-weight: bold;
+      }
+
+      .copy--secondary {
+        font-size: 12.1pt;
+        line-height: 1.2em;
+      }
+
+      .body__section--secondary {
+      }
+
+      .copy--tertiary {
+        font-size: 10.7pt;
+        line-height: 1.2em;
+        text-transform: none;
+      }
+
+      .footer {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .signature {
+        width: 160pt;
+        height: 55pt;
+        object-fit: contain;
+        object-position: center;
+      }
+
+      .logo {
+        margin-top: 24pt;
+        width: 158pt;
+        height: 60pt;
+        object-fit: contain;
+        object-position: bottom left;
+      }
+
+      .master {
+        display: none;
+      }
+      
+      {{#certFeatureImage}}.yearsOfService--5 .featureImage,
+      .yearsOfService--10 .featureImage,
+      .yearsOfService--15 .featureImage,
+      .yearsOfService--15 .featureImage,
+      .yearsOfService--20 .featureImage,
+      .yearsOfService--25 .featureImage,
+      .yearsOfService--30 .featureImage,
+      .yearsOfService--35 .featureImage,
+      .yearsOfService--40 .featureImage,
+      .yearsOfService--45 .featureImage ,
+      .yearsOfService--50 .featureImage {
+        background-image: url('{{{certFeatureImage}}}') !important;
+      }{{/certFeatureImage}}
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="" data-crop="{{show-crop}}">
+    <div class="master">
+      <div class="js-inject-src" data-target-id="copy--primary">{{{JB_copy-primary--yc}}}</div>
+      <div class="js-inject-src" data-target-id="copy--secondary">{{{JB_copy-secondary--yc}}}</div>
+      <div class="js-inject-src" data-target-id="copy--tertiary">{{{JB_copy-tertiary--yc}}}</div>
+      <div class="js-inject-src" data-target-id="signature" data-is-image="true"></div>
+      <div class="js-inject-src" data-target-id="logo" data-is-image="true">{{JB_logo--yc}}</div>
+    </div><!-- master -->
+    {{#spreadsheet.content--yc}}
+    <div class="page yearsOfService--{{years-of-service}}">
+
+      <div class="bleed">
+
+        <div class="container fit">
+          <div class="side">
+            <div class="featureImage"></div><!--featureImage-->
+          </div><!--side-->
+          <div class="main">
+            <div class="header">
+              {{#years-of-service}}
+              <div class="image">{{years-of-service}}</div><!--image-->
+              {{/years-of-service}}
+            </div><!--header-->
+            <div class="body">
+              <div class="body__section body__section--primary" data-max-height="dynamic">
+                <div class="copy copy--primary" data-max-line="1" data-target="copy--primary"></div><!--copy--primary-->
+                {{#name}}
+                <div class="name"><span class="textFit" style="font-size: 36pt; line-height: 1.2em">{{{name}}}</span></div><!--name-->
+                {{/name}}
+                <div class="copy copy--secondary"><span data-replace-what="years" data-replace-with="{{years-of-service}}" data-max-line="3" data-target="copy--secondary"></span><span> {{{orgName}}}.</span></div><!--copy--secondary-->
+              </div><!--body__section--primary-->
+              
+            </div><!--body-->
+            <div class="footer">
+             <div class="body__section body__section--secondary">
+                <div class="copy copy--tertiary" data-max-line="3" data-target="copy--tertiary"></div><!--copy--tertiary-->
+              </div><!--body__section--secondary-->
+              <img src="#" class="logo" data-target="logo"><!--logo-->
+            </div><!--footer-->
+          </div><!--main-->
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+    {{/spreadsheet.content--yc}}
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="js/hide-empty-titles.js"></script>
+    <script src="js/dynamic-inject.js"></script>
+    <script src="js/text-fit-min.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles();
+        });
+      });
+
+      const injectObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          injectDynamicContent();
+        });
+      });      
+
+      const injectSources = document.querySelectorAll('[data-target-id]');
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      if ( injectSources.length > 0 ) {
+        injectSources.forEach(src => {
+          injectObserver.observe(src, {
+            attributes: false,
+            characterData: true,
+            childList: true,
+            subtree: true,
+            attributeOldValue: false,
+            characterDataOldValue: true
+          });            
+        });
+      }    
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        injectDynamicContent();
+        hideEmptyTitles();
+      });
+
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+      
+      {{{account.snippets.yearsOfServiceCertificateImages}}}
+      var orgName = "{{{orgName}}}".toLowerCase().split(" ").join("_").toString();
+      var backgroundData = certificateBackgrounds[orgName];
+      var styles = document.querySelector("style");
+      
+      backgroundData.forEach(function(bkgUrl, i){
+        if(bkgUrl == "") bkgUrl = defaultBackgrounds[i];
+        
+        styles.innerHTML += ".yearsOfService--"+(i+1)*5+" .featureImage {background-image: url("+bkgUrl+");}";
+      });
+      
+      
+      
+      /*var teamBkgData = "{{{team.yosCertBkgImg}}}";
+      teamBkgData = teamBkgData.split(",");
+      var styles = document.querySelector("style");
+            
+      teamBkgData.forEach(function(bkgUrl, i){
+        styles.innerHTML += ".yearsOfService--"+(i+1)*5+" .featureImage {background-image: url("+bkgUrl+");}";
+      });*/
+
+    </script>
+
+
+  </body>
+</html>
