@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html data-sign="OSL">
+  <head>
+    <title>Template title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="css/minireset.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/placeholder-controller.css">
+    <!--
+    {{JB_background-image--glp}}
+    {{brand-color-options-bw}}
+    {{JB_logo--glp}}
+    {{JB_logo-size--glp}}
+    {{JB_heading--glp}}
+    {{JB_subheading--glp}}
+    {{JB_copy--glp}}
+    {{JB_copy2--glp}}
+    {{textBackground}}
+    {{JB_sub-brand-image--glp}}
+    -->
+
+    <style>
+      @import url('https://outfit-assets-production.s3.amazonaws.com/fonts/Calibri-Full/stylesheet.css');
+
+      :root {
+        --white: #FFF;
+        --black: #000;
+        --cw-green: {{{account.colors.cw-green}}};
+        --cw-blue: {{{account.colors.cw-blue}}};
+        --rex: {{{account.colors.rex}}};
+        --gsr-green: {{{account.colors.gsr-green}}};
+        --gsr-blue: {{{account.colors.gsr-blue}}};
+        --gsr-red: {{{account.colors.gsr-red}}};
+        --jb-bronze: {{{account.colors.jb-bronze}}};
+        --jb-green: {{{account.colors.jb-green}}};
+        --jb-grey: {{{account.colors.jb-grey}}};
+
+        --dynamic-colour: var(--white);
+      }
+      
+      .brandColor--white { --dynamic-colour: var(--white); }
+      .brandColor--black { --dynamic-colour: var(--black); }
+      .brandColor--cw-green { --dynamic-colour: var(--cw-green); }
+      .brandColor--cw-blue { --dynamic-colour: var(--cw-blue); }
+      .brandColor--rex { --dynamic-colour: var(--rex); }
+      .brandColor--gsr-green { --dynamic-colour: var(--gsr-green); }
+      .brandColor--gsr-blue { --dynamic-colour: var(--gsr-blue); }
+      .brandColor--gsr-red { --dynamic-colour: var(--gsr-red); }
+      .brandColor--jb-bronze { --dynamic-colour: var(--jb-bronze); }
+      .brandColor--jb-green { --dynamic-colour: var(--jb-green); }
+      .brandColor--jb-grey { --dynamic-colour: var(--jb-grey); }
+      
+      html {
+        font-family: 'Calibri';  
+        /*text-transform: uppercase;*/
+      }
+
+      /* Helper class for fixing Reposition tool bug */
+      .reposition-fix {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;        
+      } 
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;     
+        margin: 36pt;
+        color: var(--dynamic-colour);
+      }
+
+      .backgroundImage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: -1;
+      }
+
+      .header {
+        flex-shrink: 0;
+        height: 161pt;
+        width: 95%;
+        padding-top: 47pt;            
+      }
+      
+      .logo__container {
+        height: 55pt;
+      }
+
+      .logo {  
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        height: {{JB_logo-size--glp}}{{^JB_logo-size--glp}}100{{/JB_logo-size--glp}}%;
+      }
+
+      .body {
+        flex: 1;
+        padding: 0 68pt 20pt;
+        text-align: center;  
+      }
+
+      .heading {
+        margin-bottom: 22pt;
+      }
+
+      .heading h1 {
+        font-size: 52pt;
+        letter-spacing: 1.7pt;
+        font-weight: bold;
+      }
+
+      .subheading {       
+        margin-bottom: 21pt;
+      }
+
+      .dual-column .subheading {
+        margin-bottom: 30pt;
+      }
+
+      .subheading h2 {
+        font-size: 32pt;
+        font-weight: bold;
+        letter-spacing: 2.2pt;
+      }
+
+      .copy{
+        width: 100%;
+      }
+
+      .copy h3 {
+        font-size: 15pt;
+        font-weight: bold;
+        letter-spacing: 0.6pt;
+      }
+
+      .copy p {
+        font-size: 11.9pt;
+        text-transform: none;
+      }
+
+      .dual-column .copy {
+        padding: 0 3pt;
+        /*column-count: 2;*/
+        /*column-gap: 29pt;*/
+        width: 50%;
+        text-align: left;  
+      }
+
+      .single-column .copy2{
+        display: none;
+      }
+
+      .footer {
+        padding-bottom: 25pt;
+        width: 91.3%;
+        text-align: center;      
+        font-size: 0;
+      }
+
+      .brandImage {
+        max-height: 53pt;
+        max-width: 100%;
+      }
+
+      .textBackground--yes .heading,
+      .textBackground--yes .subheading,
+      .textBackground--yes .copy{
+        background-color: #fff;
+      }
+
+      /* Helper classes */
+      .u-hide {
+        display: none;
+      }
+
+      /* ANY OTHER STYLES THAT NEED MUSTACHE.JS CAPABILITIES */
+    </style>
+  </head>
+  <body style="background: white" class="u-placeholder-{{ placeholder-toggle-new }}{{^placeholder-toggle-new}}hide{{/placeholder-toggle-new}} {{#brand-color-options-bw}} brandColor--{{brand-color-options-bw}} {{/brand-color-options-bw}}{{^brand-color-options-bw}} brandColor--white{{/brand-color-options-bw}}" data-crop="{{show-crop}}">
+    <div class="placeholderMaster" data-opacity="{{ placeholder-opacity }}">
+      {{#placeholder-image-1}}
+      <div class="placeholderMaster__item" data-bg="{{ placeholder-image-1 }}"></div>
+      {{/placeholder-image-1}}
+    </div><!-- end placeholderMaster -->
+    <div class="page {{JB_copy-layout--glp}}{{^JB_copy-layout--glp}}single-column{{/JB_copy-layout--glp}} textBackground--{{textBackground}} {{^textBackground}}textBackground--no{{/textBackground}}">
+
+      <div class="bleed">
+
+        <div class="container fit">
+
+          <div class="backgroundImage">
+            <div class="reposition-fix">{{{JB_background-image--glp}}}</div><!--reposition-fix-->
+          </div><!--backgroundImage-->
+          <div class="header">
+            <div class="logo__container">
+              <div class="logo" style="background-image: url({{{JB_logo--glp}}});"></div><!--logo logo--primary-->
+            </div><!--logo__container-->
+          </div><!--header-->
+          <div class="body">
+            {{#JB_heading--glp}}<div class="heading js-subtrahend" data-max-line="1">{{{JB_heading--glp}}}</div><!--heading-->{{/JB_heading--glp}}
+            {{#JB_subheading--glp}}<div class="subheading js-subtrahend" data-max-line="1">{{{JB_subheading--glp}}}</div><!--subheading-->{{/JB_subheading--glp}}
+            <div data-max-height="dynamic">
+              <div style="display: flex; flex-direction: row;">
+                {{#JB_copy--glp}}<div class="copy">{{{JB_copy--glp}}}</div><!--copy-->{{/JB_copy--glp}}
+                {{#JB_copy2--glp}}<div class="copy copy2">{{{JB_copy2--glp}}}</div><!--copy-->{{/JB_copy2--glp}}
+              </div>
+            </div>
+          </div><!--body-->
+          <div class="footer">        
+            <img src="{{{JB_sub-brand-image--glp}}}" alt="" class="brandImage">
+          </div><!--footer-->
+
+        </div><!--container fit-->
+
+      </div><!--bleed-->
+
+    </div><!--page-->
+
+
+    <script>
+      window.showCrop = {{show-crop}}{{^show-crop}}true{{/show-crop}};
+    </script>
+    <script src="js/main.js"></script>   
+    <script src="js/prefixfree.js"></script>
+    <script src="js/placeholder-controller.js"></script>
+    <script src="js/char-limit.js"></script>
+    <script src="js/check-export-mode.js"></script>
+    <script src="js/max-line-check.js"></script>
+    <script src="js/max-height-check.js"></script>
+    <script src="https://outfit-assets-production.s3-accelerate.amazonaws.com/scripts/textfit.0.0.4.min.js" type="text/javascript"></script>
+    <script>
+
+      // Tracking text changes and firing text restriction functions (mutationObserver)
+      const overflowObserver = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          maxLineCheck();
+          maxHeightCheck();
+          charLimit();
+          hideEmptyTitles('.heading');
+          hideEmptyTitles('.subheading');          
+        });
+      });
+
+      overflowObserver.observe(document.body, {
+        attributes: false,
+        characterData: true,
+        childList: true,
+        subtree: true,
+        attributeOldValue: false,
+        characterDataOldValue: true
+      });
+
+      // Temporary solution used cause conditional tags for text inputs 
+      // that include heading formatting are not working
+      function hideEmptyTitles(selector) {
+        const titles = document.querySelectorAll(selector);
+        titles.forEach( title => {
+          const isEmpty = title.innerText.trim().length == 0;
+          isEmpty ? title.classList.add('u-hide') : title.classList.remove('u-hide');
+        });
+      }      
+
+      // Calling text size restriction functions once the fonts are loaded
+      document.fonts.ready.then(() => {
+        maxLineCheck();
+        maxHeightCheck();
+        hideEmptyTitles('.heading');
+        hideEmptyTitles('.subheading');
+      });
+
+      placeholderController();
+      checkCrop();
+      checkExport();
+      charLimit();
+
+      // TextFit function decreases the font of the selected element to make it fit in single line (if needed, uncomment the code bellow)
+      TextFit.fit({
+        selector: '.textFit'
+      });
+
+    </script>
+
+
+  </body>
+</html>
